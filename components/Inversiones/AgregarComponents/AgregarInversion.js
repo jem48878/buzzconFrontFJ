@@ -8,8 +8,10 @@ import { FaFileUpload } from "react-icons/fa";
 
 import ModalAlerta   from '@/components/ModalAlerta.js';   
 
-
 import { useState, useEffect , useContext } from 'react';
+
+import { agregarInversion } from '@/utils/dataInversionesFunction'; //nuevo
+
 
 function AgregarInversion() {
   
@@ -111,7 +113,8 @@ function AgregarInversion() {
                  devStage       :avance }
     }        
 
-        
+   const entorno = process.env.NEXT_PUBLIC_ENTORNO;       //nuevo   
+
    const handleAgregar = async () => {
         
        console.log("click submit form")
@@ -131,6 +134,7 @@ function AgregarInversion() {
        console.log("avance:" , avance )
        console.log("description:" , description )
        
+       let respuesta = null   //nuevo
        try {  
         
         setMessage(null); 
@@ -150,7 +154,7 @@ function AgregarInversion() {
         
         
         if (estanCompletos ) {
-            console.log("entre campos obligatorios")
+            console.log("entre campos obligatorios:" , entorno )
              
                 
               //is_Asking
@@ -162,6 +166,25 @@ function AgregarInversion() {
                     prmInversion = false;
               }
         
+            
+             if ( entorno == 'local') {    //nuevo
+                 
+                let tags =  armarTags(tecnologias, areas , sustentable , contrato , avance)  
+                console.log ('tags en pagina:', tags) 
+                
+                const entrada = {owner , title , verificado , prmInversion , summary , localidad , tags ,  description , contactInfo};   
+                 
+                console.log("tags en pagina entrada:" , entrada.tags)  
+                 
+                respuesta = await agregarInversion(entrada)
+                console.log("respuesta.codRet:" , respuesta.codRet )  
+                console.log("respuesta.error:" , respuesta.error)  
+                if (respuesta.codRet !== 0 )  
+                   throw new Error(respuesta.error); 
+             }
+             else {   //nuevo
+            
+            
              
               const response = await fetch('/api/ApiMockAgregarInversion', {
                  method: 'POST',
@@ -185,8 +208,12 @@ function AgregarInversion() {
          
               });
         
+             } //nuevo fin else api local
+            
+            
              setAltaOK(true)  
              setModalAbierto(true)
+                 
              if (file) {
                console.log("fileViejo:" , file.name )
         
