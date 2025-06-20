@@ -1,7 +1,9 @@
 
 //ApiMockInversiones
-import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
 //import DataInversiones from '@/data/DataInversiones';
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+
+import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStoreServer';
 
 export async function GET(request) {
   try {
@@ -63,8 +65,8 @@ export async function GET(request) {
 }
 
 
-
-async function getInversiones(entrada) {
+//para file local 
+async function getInversiones2(entrada) {
     
   // Lógica para obtener los inveriones (ejemplo: desde una base de datos)
   console.log("desde get:" + JSON.stringify(entrada));    
@@ -174,5 +176,108 @@ async function getInversiones(entrada) {
   return response ;  
   
 }
+
+
+//para firebase
+async function getInversiones(entrada) {
+    
+  // Lógica para obtener los inveriones (ejemplo: desde una base de datos)
+  console.log("desde get Inverriones2:" + JSON.stringify(entrada));    
+  
+    
+  const DataInversiones = await loadInversiones();       
+  //console.log("dataInversiones:" , DataInversiones)
+    
+    
+  var response = DataInversiones 
+ 
+     
+  if (entrada.q && entrada.q !=" ") {
+    response = DataInversiones.filter(producto => producto.title === entrada.q);
+  };
+          
+  if (entrada.localidad  && entrada.localidad !=" ") {
+    response = response.filter(producto => producto.location === entrada.localidad);
+  };  
+    
+  
+  if (entrada.prmInversion != null && entrada.prmInversion !=="") {    
+    console.log("inversiones2" , entrada.prmInversion)  
+    response = response.filter(producto => producto.is_Asking === entrada.prmInversion);
+  };  
+   
+  
+   
+  if (entrada.inversion && entrada.inversion!=" ") {
+      
+    if (entrada.inversion == "true")  
+        entrada.inversion = true 
+    else 
+        entrada.inversion = false
+      
+    console.log("inversiones2" , entrada.inversion)  
+    response = response.filter(producto => producto.is_Asking === entrada.inversion);
+  };  
+       
+    
+    
+    
+    
+ if (entrada.verificado && entrada.verificado !=" ") {
+     console.log("busqueda por verificado")      
+    response = response.filter(producto => producto.verify_level === entrada.verificado);
+  };  
+        
+ 
+  if (entrada.sustentable && entrada.sustentable.trim() !== "") {
+     const buscado = entrada.sustentable.trim().toLowerCase();
+     response = response.filter(producto => {       
+        return Array.isArray(producto.tags) &&
+              producto.tags.some(tag => tag.toLowerCase() === buscado);
+      });
+    }
+
+    
+    
+  if (entrada.contrato && entrada.contrato.trim() !== "") {
+     const buscado = entrada.contrato.trim().toLowerCase(); 
+    response = response.filter(producto => { 
+        return Array.isArray(producto.tags) &&
+              producto.tags.some(tag => tag.toLowerCase() === buscado);
+      });
+    }
+  
+    
+  if (entrada.avance && entrada.avance.trim() !== "") {
+     const buscado = entrada.avance.trim().toLowerCase();
+    response = response.filter(producto => {
+        return Array.isArray(producto.tags) &&
+              producto.tags.some(tag => tag.toLowerCase() === buscado);
+      });
+    }    
+
+  
+   
+  if (entrada.tecnologias && entrada.tecnologias.length > 0) {
+    console.log("entre tecnologias:" , entrada.tecnologias.length)   
+    response = response.filter(producto => {
+    return Array.isArray(producto.tags) &&
+         producto.tags.some(area => entrada.tecnologias.includes(area));
+  }); 
+  }      
+    
+  
+  
+    
+  if (entrada.areas && entrada.areas.length > 0) {   
+    response = response.filter(producto => {
+    return Array.isArray(producto.tags) &&
+         producto.tags.some(x => entrada.areas.includes(x));
+   }); 
+   }  
+    
+  return response ;  
+}
+    
 
 
