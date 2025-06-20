@@ -29,7 +29,7 @@ export async function POST(request) {
     const is_Asking    = body.is_Asking
     const summary      = body.summary 
     const location     = body.location
-    const tags         = body.tags  
+    let tags         = body.tags            //para firebase
     const description  = body.description
     const contactInfo  = body.contactInfo
     
@@ -40,8 +40,14 @@ export async function POST(request) {
     console.log("title        :"  + title )   
     console.log("tags         :"  + tags )    
      
-    const tags2       = body.tags2    
     
+      
+    //para firebase  
+    if (tags.length == 0) {
+        tags = [""]
+    }  
+      
+      
     
     const entrada = {owner , title , summary , location , imagen ,   is_Asking , verify_level , tags ,  description , contactInfo};   
         
