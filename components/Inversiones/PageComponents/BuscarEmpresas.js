@@ -11,6 +11,8 @@ import { useEffect } from 'react';
 
 import InversionesFiltros from '@/components/Inversiones/Filtros/InversionesFiltros';
 
+import { searchInversiones } from '@/utils/dataInversionesFunction';
+
 function BuscarEmpresas({ text }) {
     
       
@@ -91,6 +93,8 @@ function BuscarEmpresas({ text }) {
         setValorInput(event.target.value);
       };
    
+   
+   const entorno = process.env.NEXT_PUBLIC_ENTORNO;    //nuevo
     
    const handleButtonClick = async () => {
       console.log('Valor del input:', valorInput);
@@ -139,26 +143,37 @@ function BuscarEmpresas({ text }) {
                                                   is_Asking:prmInversion ,
                                                   verify_level:verificado    
                                                 });  
-        // Hacer la llamada GET
-        const url = process.env.NEXT_PUBLIC_API_BUSCAR_INVERSIONES;    
-        //const response = await fetch(`/api/ApiMockInversiones?${queryParams.toString()}`, {
-        const response = await fetch(`${url}?${queryParams.toString()}`, {
+           let dataEmpresas = null //nuevo
+           if ( entorno == 'local') {    //nuevo
+             setError(null)  
+             const entrada = {valorInput , localidad , areas, avance , sustentable , tecnologias , contrato , prmInversion , verificado };      
+             dataEmpresas = await searchInversiones(entrada)
+           }
+           
+        else {          
+           
+          // Hacer la llamada GET
+          const url = process.env.NEXT_PUBLIC_API_BUSCAR_INVERSIONES;    
+          //const response = await fetch(`/api/ApiMockInversiones?${queryParams.toString()}`, {
+          const response = await fetch(`${url}?${queryParams.toString()}`, {
              method: 'GET',
-        });
+          });
         
-        /*Hacer la llamada POST
-        const response = await fetch('/api/ApiMockPostEmpresas', {
-          method: 'POST',
-          headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({localidad: valorInput}),
+          /*Hacer la llamada POST
+          const response = await fetch('/api/ApiMockPostEmpresas', {
+            method: 'POST',
+            headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify({localidad: valorInput}),
          
-        });
-        */
-          
-        setError(null)  
-        const dataEmpresas = await response.json();
+          });
+         */
+          setError(null)  
+          dataEmpresas = await response.json();
+         } /*fin usar api mock */        
+            
+            
         if (dataEmpresas.res.length > 0 ) { 
            setRsBsqEmpresas(null);
            setRsBsqEmpresas(dataEmpresas.res);

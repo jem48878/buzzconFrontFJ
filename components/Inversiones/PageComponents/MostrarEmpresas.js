@@ -12,6 +12,9 @@ import TraerImagen from '@/components/Inversiones/PageComponents/TraerImagen';
 
 import Image from 'next/image';  //nuevo
 
+import { searchInversiones } from '@/utils/dataInversionesFunction';
+
+
 function MostrarEmpresas() {
 
   const [data, setData] = useState([]); 
@@ -19,18 +22,30 @@ function MostrarEmpresas() {
   const [error, setError] = useState(null);        
     
   const {rsBsqEmpresas, setRsBsqEmpresas} = useContext(MyContext); 
-    
+   
+  const entorno = process.env.NEXT_PUBLIC_ENTORNO;  //nuevo    
   
     
   useEffect(() => {
   const fetchData = async () => {
-    try {      
-      //const response = await fetch('/api/ApiMockInversiones');  
-      const url = process.env.NEXT_PUBLIC_API_BUSCAR_INVERSIONES;    
-      const response = await fetch(url, {
+    try {  
+        
+      let dataEmpresas = null      //nuevo
+      console.log("ENTORNO:" . entorno)        
+      if ( entorno == 'local') {   //nuevo
+          const entrada = "" ;
+          dataEmpresas = await searchInversiones(entrada)
+          
+      }       
+      else {
+        
+        //const response = await fetch('/api/ApiMockInversiones');  
+        const url = process.env.NEXT_PUBLIC_API_BUSCAR_INVERSIONES;    
+        const response = await fetch(url, {
             method: 'GET',
-      });
-      const dataEmpresas = await response.json();
+        });
+        dataEmpresas = await response.json();
+      }      
         
       setRsBsqEmpresas(null);
       setRsBsqEmpresas(dataEmpresas.res);

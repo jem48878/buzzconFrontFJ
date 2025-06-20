@@ -11,7 +11,7 @@ import { FaCheck } from "react-icons/fa";
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'  
 import ModalAlerta   from '@/components/ModalAlerta.js';   
 
-
+import { searchUnaInversion } from '@/utils/dataInversionesFunction';
 
 function DetalleInversion({ owner , title , opcion}) {
     
@@ -33,27 +33,37 @@ function DetalleInversion({ owner , title , opcion}) {
    }, []);
     
     
-    
+   const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
     
    useEffect(() => {
    const fetchData = async () => {
     try {
       
-      const url = process.env.NEXT_PUBLIC_API_DETALLE_INVERSION;    
+      let dataRes = null    //nuevo
+       
+      if ( entorno == 'local') {    //nuevo
+           
+          const entrada = {owner , title };   
+          dataRes = await searchUnaInversion(entrada)
+      }
+      else {  //nuevo
         
-      const queryParams = new URLSearchParams({ owner: owner ,
+        const url = process.env.NEXT_PUBLIC_API_DETALLE_INVERSION;    
+        
+        const queryParams = new URLSearchParams({ owner: owner ,
                                                 title: title 
                                               });      
-      //const response = await fetch(`/api/ApiMockDetalleInversion?${queryParams.toString()}`, {  
-      const response = await fetch(`${url}?${queryParams.toString()}`, {
+        //const response = await fetch(`/api/ApiMockDetalleInversion?${queryParams.toString()}`, {  
+        const response = await fetch(`${url}?${queryParams.toString()}`, {
              method: 'GET',
-      });
-      const data = await response.json();
+        });
+        dataRes = await response.json(); //nuevo
+       }   // fin nuevo else    
       
-      setData(data.res);
+      setData(dataRes.res);  //nuevo
 
       setLoading(false);
-      console.log('resp empresas2:', data.res);
+      console.log('resp empresas2:', dataRes.res);  //nuevo
     } catch (error) {
       console.error("Error al cargar empresas:", error);
       // setError(error);
