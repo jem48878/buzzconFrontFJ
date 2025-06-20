@@ -1,9 +1,9 @@
 
 //ApiMockInversiones
 //import DataInversiones from '@/data/DataInversiones';
-//import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
 
-import { loadInversiones, addInversion } from '@/utils/datainversionesFireStoreServer';
+//import { loadInversiones, addInversion } from '@/utils/datainversionesFireStoreServer';
 
 export async function GET(request) {
   try {
