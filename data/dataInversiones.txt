@@ -1,0 +1,288 @@
+[
+  {
+    "owner": "owner-1",
+    "title": "title 1",
+    "summary": "Empresa dedicada  a la actividad 1",
+    "location": "CABA",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-5",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-2",
+    "title": "title 2",
+    "summary": "Empresa dedicada  a la actividad 2",
+    "location": "CABA",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "Descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-3",
+    "title": "title 3",
+    "summary": "Empresa dedicada  a la actividad 3",
+    "location": "CABA",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "not_verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Tecno-3",
+      "Tecno-4",
+      "Tecno-5",
+      "Tecno-6",
+      "Tecno-7",
+      "Tecno-8",
+      "Tecno-9",
+      "Tecno-10",
+      "Tecno-11",
+      "Tecno-12",
+      "Tecno-13",
+      "Tecno-14",
+      "Tecno-15",
+      "Ventas",
+      "sustentable",
+      "Prestamos",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-4",
+    "title": "title 4",
+    "summary": "Empresa dedicada  a la actividad 4",
+    "location": "Rosario",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "sustentable",
+      "Prestamos",
+      "DevStage60"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-5",
+    "title": "title 5",
+    "summary": "Empresa dedicada  a la actividad 5",
+    "location": "Rosario",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage30"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-6",
+    "title": "title 6",
+    "summary": "Empresa dedicada  a la actividad 6",
+    "location": "Cordoba",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "not_verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-7",
+    "title": "title 7",
+    "summary": "Empresa dedicada  a la actividad 7",
+    "location": "Cordoba",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-8",
+    "title": "title 8",
+    "summary": "Empresa dedicada  a la actividad 8",
+    "location": "Mendoza",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-9",
+    "title": "title 9",
+    "summary": "Empresa dedicada  a la actividad 9",
+    "location": "Mendoza",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Ventas",
+      "sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-10",
+    "title": "title 10",
+    "summary": "Empresa dedicada  a la actividad 10",
+    "location": "Buenos Aires",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": true,
+    "verify_level": "verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Finanzas",
+      "no sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "owner-11",
+    "title": "title 11",
+    "summary": "Empresa dedicada  a la actividad 11",
+    "location": "Buenos Aires",
+    "imagen": "/fabrica.jpg",
+    "is_Asking": false,
+    "verify_level": "not_verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Finanzas",
+      "no sustentable",
+      "Acciones",
+      "DevStage20"
+    ],
+    "description": "descripcion larga de la inversion con detalles adicionales",
+    "contactInfo": "whatsApp:5555-4444"
+  },
+  {
+    "owner": "jem48878-12",
+    "title": "inversion-12",
+    "summary": "",
+    "location": "",
+    "verify_level": "not_verified",
+    "imagen": "",
+    "is_Asking": true,
+    "tags": [],
+    "description": "",
+    "contactInfo": ""
+  },
+  {
+    "owner": "jem48878-14",
+    "title": "inversion-14",
+    "summary": "",
+    "location": "CABA",
+    "imagen": "",
+    "is_Asking": true,
+    "verify_level": "not_verified",
+    "tags": [
+      "Tecno-1",
+      "Tecno-2",
+      "Finanzas",
+      "Marketing",
+      "sustentable",
+      "Acciones",
+      "DevStage10"
+    ],
+    "description": "",
+    "contactInfo": ""
+  },
+  {
+    "owner": "",
+    "title": "fhgfhg",
+    "summary": "",
+    "location": "",
+    "imagen": "",
+    "is_Asking": true,
+    "verify_level": "",
+    "tags": [],
+    "description": "",
+    "contactInfo": ""
+  },
+  {
+    "owner": "asdads",
+    "title": "dadas",
+    "summary": "",
+    "location": "",
+    "imagen": "",
+    "is_Asking": true,
+    "verify_level": "",
+    "tags": [],
+    "description": "",
+    "contactInfo": ""
+  },
+  {
+    "owner": "fj",
+    "title": "prueba modal color",
+    "summary": "",
+    "location": "",
+    "imagen": "",
+    "is_Asking": false,
+    "verify_level": "",
+    "tags": [],
+    "description": "",
+    "contactInfo": ""
+  }
+]

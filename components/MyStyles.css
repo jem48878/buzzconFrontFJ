@@ -1,0 +1,699 @@
+.my-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.my-button:hover {
+  background-color: #45a049;
+}
+
+.my-button:active {
+  background-color: #3e8e41;
+}
+
+
+
+
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin: auto;
+    //margin-left: 30px;
+    padding-right : 20px;
+
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+div {
+    text-align: center ;
+}
+
+input {
+margin: auto;
+width: 60%;
+border: 1px solid black;
+}
+
+
+
+/* BUSCAR CON FILTROS */
+.contenedor-busqueda {
+  display: flex;
+  align-items: center;
+}
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+  gap: 10px;
+  
+}
+
+/*anterioor*/
+.filtros-container {        
+  align-items: center;    
+  justify-content: center;    
+  width: fit-content;
+  margin: 0 auto;
+  gap: 10px;         
+}
+
+
+.filtros-container2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 10px;  
+  border-radius: 15px;
+}
+
+
+
+
+
+.btn-filtros {
+  height: 40px;
+  width: 140px;
+  border: 2px solid #000000;
+  border-radius: 20px; /* Redondeado tipo píldora */
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Centra texto si hay más de una línea */
+  background-color: white; /* Fondo blanco como en la imagen */
+  color: black; /* Texto negro */
+}
+
+
+.select-filtros {
+  padding: 4px ;
+  width: 160px ;
+  height: 40px ;
+  border-radius: 20px;
+}
+
+.btn-toggle {
+  height: 40px;
+  width: 120px;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  min-width: 100px;
+  cursor: pointer;
+  border-radius: 20px;
+  border: none;
+
+  /* Centrar texto vertical y horizontal */
+  display: flex;
+  align-items: center;    /* centrado vertical */
+  justify-content: center; /* centrado horizontal */
+
+  text-align: center; /* para textos multilinea, centrar horizontalmente */
+}
+
+
+
+.checkbox-label {
+  display: flex;
+  align-items: center; /* Cambiado de flex-start a center para mejor alineación */
+  gap: 8px;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  margin: 2px 0; /* Pequeño margen vertical para separación */
+  width: fit-content;
+}
+
+.checkbox-text {
+  text-align: left ;
+}
+
+.input-bsq {
+  flex: 1;
+  height: 40px;
+  padding: 0 10px;
+  border: 2px solid black;
+  border-radius: 20px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.btn-default-bsq {
+  height: 40px;
+  width: 40px;
+  border: 2px solid #000000;
+  border-radius: 50%; /* Hace que sea perfectamente circular */
+  background-color: #087571; /* El color más claro del fondo degradado */
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff; /* Opcional: para que el texto o ícono sea visible */
+}
+.btn-default-bsq:hover {
+  background-color: transparent;
+  border-color: #585859;
+  color: #3C3C3B;
+}
+
+
+/* MOSTRAR EMPRESAS */
+
+.container-empresas {
+  display: inline;  /* O float: left  */
+}
+
+
+
+.container-emp {
+  display: inline-block;
+  color: black;
+  width: 30.33%; /* Para que queden 3 imágenes por fila  */
+  height: 230px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 2px solid black ;
+  border-radius: 10px;
+  position: relative;      /*para facheck*/
+    
+  vertical-align: top; /* <- clave para alinear arriba todos */
+  box-sizing: border-box; /* <- incluye borde y padding en el width */    
+    
+}
+
+
+
+.fondo-0 {
+  background-color: #6699CC;
+}
+
+.fondo-1 {
+  background-color: white;
+}
+
+
+.titulo-emp {
+  width: 100%;
+  height: 20%;
+  padding-top: 20px;
+
+  text-align: center;   /*nuevo*/
+  font-weight: bold;    /*nuevo*/
+}
+
+.fa-check {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: black;
+  width: 3em;
+  height: 3em;
+}
+
+.fa-check-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  color: black;
+  width: 3em;
+  height: 3em;
+}
+
+
+
+
+
+.check-1 {
+   color: yellow;
+}
+
+.check-2 {
+  color: limegreen;
+}
+
+
+.detalle-emp {
+  width: 100%;
+  height: 80%;
+  display: flex
+}
+
+
+.descripcion-emp {
+  width: 60%;
+  height: 100%;
+  overflow-wrap: break-word;
+  padding: 40px;
+}
+
+.img-emp {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Opcional: Puedes añadir 'display: block;' para evitar espacios extra */
+  /*display: block;*/
+  padding: 13px;
+}
+
+
+
+.icono-fijo {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;    /* Fondo blanco */
+  color: black;               /* Color del contenido interno en negro */
+  border: 2px solid black;    /* Borde negro */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease; /* Transición suave */
+}
+
+.icono-fijo:hover {
+  background-color: #a37d7d; /* Fondo un poco más oscuro que blanco */
+  color: black;              /* El contenido interno sigue negro */
+  border-color: black;       /* Mantener el borde negro */
+}
+
+
+
+.icono-fijo-Menu {
+    position: fixed;
+    top: 20px;     /* distancia desde el borde superior */
+    left: 20px;    /* distancia desde el borde izquierdo */
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 1000; /* asegura que esté por encima de otros elementos */
+    width: 40px;
+    height: 40px;
+  }
+
+.icono-fijo-Menu:hover {
+    background-color: #555;
+  }
+
+
+
+.page-header-SIN-USO {
+  text-align: center;            /* Centra el contenido horizontalmente */
+  margin-top: 40px;              /* Espacio desde el borde superior */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente legible */
+  font-size: 2rem;               /* Tamaño de fuente */
+  color: #333;                   /* Color del texto */
+}
+
+
+/*PAGINA DE DETALLE*/
+
+.container-detalle-inv {
+  display: inline-block;
+  width: 80%;
+  /*height: 100vh; /* <-- Ocupa toda la altura de la ventana */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-sizing: border-box; /* para que border y padding no sumen altura extra */
+
+}
+
+/*DETALLE INVERSION*/
+/*CABECERA*/
+.cabecera-container-inv {
+  width: 100%;
+  height: 20%;
+  display: flex ;
+  gap: 8px;
+  padding: 20px ;
+}
+
+
+.cabecera-summary-inv {
+  width: 60%;
+  height: 100%;
+  overflow-wrap: break-word;
+  padding: 13px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* Alinea verticalmente */
+  align-items: flex-start;   /* Alinea horizontalmente hacia la izquierda */
+  text-align: left;          /* Alinea el texto a la izquierda */
+
+  position: relative;        /* para check */
+}
+
+.cabecera-imagen-inv {
+  width: 40%;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0;
+}
+
+.cabecera-imagen-inv img {
+  height: 100%;            /* fuerza a que ocupe toda la altura del contenedor */
+  width: auto;             /* mantiene la proporción */
+  object-fit: cover;       /* recorta si es necesario */
+}
+
+
+
+
+{/* TAG*/}
+.tag-titulo-inv {
+  /*display: inline;*/  /* O float: left  */
+  display: flex ;
+  padding-left: 20px ;
+  padding-bottom: 5px;
+}
+
+.tag-container-inv {
+  /*display: inline;*/  /* O float: left  */
+  width: 100%;
+  /*height: 10%; */
+  display: flex ;
+  gap: 8px;
+  padding-left: 20px ;
+  padding-right: 20px ;
+  flex-wrap: wrap;
+}
+
+.tag-inv {
+  display: flex;
+  width: 18.00%; 
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: white;
+  color: #000000;
+  flex-direction: column;
+  justify-content: center;  /* Alinea verticalmente */
+  align-items: center;      /* Alinea horizontalmente */
+  text-align: center;       /* Centra el texto */
+}
+
+
+/*DESCRIPCION*/
+.descripcion-container-inv {
+  width: 100%;
+  height: 20%;
+  display: flex ;
+  gap: 8px;
+  padding: 20px ;
+}
+
+.descripcion-box {
+  width: 80%;
+  height: 120px;
+  margin: 0 auto;              /* <- centra horizontalmente */
+  padding: 10px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  background-color: #b2b0b0;
+  border-radius: 5px;
+  text-align: left
+}
+
+
+
+
+/*FOTOS*/
+.fotos-container-inv2{
+  width: 100%;
+  height: 20%;
+  display: flex ;
+  gap: 8px;
+  padding: 20px ;
+}
+
+.fotos-box2 {
+  width: 60%;
+  height: 60%;
+  margin: 0 auto;              /* <- centra horizontalmente */
+  border: 1px solid #2c6faf;
+  padding: 10px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+
+.fotos-container-inv3 {
+  width: 100%;
+   height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+}
+
+.fotos-box3 {
+  width: 60%;
+  height: 60%;
+  border: 1px solid #2c6faf;
+  padding: 10px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.fotos-box3 img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+
+.fotos-container-inv {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px;
+
+  display: block !important;
+
+}
+
+.fotos-box {
+  /* width: 60%;
+  height: 60%; */
+  /* border: 1px solid #2c6faf; */
+  /* padding: 10px; */
+  overflow-y: auto;
+  white-space: pre-wrap;
+  /* background-color: #f9f9f9; */
+  border-radius: 5px;
+}
+
+.fotos-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+
+.arrow {
+  font-size: 33px;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+}
+
+
+
+.fotos-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.fotos-navegacion {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+
+/*FIN DETALLE INVERSION*/
+
+
+
+
+/*PAGINA AGREGAR*/
+
+.container-agregar {
+  display: inline-block;
+  width: 85%;
+  /*height: 100vh; /* <-- Ocupa toda la altura de la ventana */
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-sizing: border-box; /* para que border y padding no sumen altura extra */
+
+}
+
+/*DETALLE INVERSION*/
+/*CABECERA*/
+.cabecera-container-agregar {
+  width: 100%;
+  height: 20%;
+  display: flex ;
+  gap: 8px;
+  padding: 20px ;
+}
+
+.required-asterisk {
+  color: red;
+}
+
+
+.cabecera-summary-agregar {
+  width: 60%;
+  height: 100%;
+  overflow-wrap: break-word;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  //justify-content: center;  /* Alinea verticalmente */
+  //align-items: center;      /* Alinea horizontalmente */
+  //text-align: center;       /* Centra el texto */
+}
+
+
+.cabecera-imagen-agregar {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* alinea verticalmente */
+  align-items: center;      /* alinea horizontalmente */
+  text-align: center;
+  padding: 0;
+}
+
+
+.cabecera-imagen-agregar img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+
+
+.filtros-container-agregar {
+  display: flex ;
+  flex-direction: row ;  /* Alinea en una sola fila */
+  justify-content: space-between  ; /* o 'center' según lo que busques */
+  align-items: flex-start;
+  flex-wrap: nowrap ;  /* o wrap si se ve demasiado comprimido */
+  margin-top: 20px ;
+  padding: 20px  ;
+}
+
+
+.input-textArea-agregar {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical; /* permite redimensionar verticalmente */
+}
+
+.btn-agregar {
+  height: 40px;
+  width: 140px; /* Tamaño fijo en lugar de porcentaje */
+  border: 1px solid #595958;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: end;
+}
+
+.btn-container-agregar {
+  display: flex;
+  flex-direction: row;   /* Alinea en una sola fila */
+  justify-content: flex-end; /* Alinea a la izquierda */
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.btn-container-foto-agregar {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-agregar {
+  flex: 1;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+label-agregar {
+  flex: 1;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: white;
+  align-items: flex-start;
+}
