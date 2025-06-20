@@ -1,4 +1,4 @@
-import React from 'react';
+
  
 import DetalleClient from '@/components/Inversiones/DetalleComponents/DetalleClient';
 import React, { Suspense } from 'react';
