@@ -13,7 +13,7 @@ export async function POST(req) {
   const file = formData.get('file');
   const customName = formData.get('filename'); // nombre personalizado
 
-  console.log("api subir supabase:", file, 'nuevo nombre supabase:', customName);
+  console.log("2api subir supabase:", file, 'nuevo nombre supabase:', customName);
 
   if (!file) {
     return NextResponse.json({ message: 'No file provided' }, { status: 400 });
@@ -48,6 +48,8 @@ export async function POST(req) {
       .from('imagenesbuzzconfj')
       .getPublicUrl(filePath);
 
+    console.log ("Url generada para supabase:" , url: data.publicUrl)  ;
+      
     return NextResponse.json({ message: 'Archivo subido correctamente', url: data.publicUrl });
   } catch (error) {
     console.error('Error al guardar archivo:', error);
