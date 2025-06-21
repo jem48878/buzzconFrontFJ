@@ -1,5 +1,5 @@
 // utils/datainversionesFireStoreServer.js
-import { db } from '@/src/firebaseAdmin'; // cambia esto: ya no usamos firebase normal
+import { db } from '@/src/firebaseAdmin'; 
 
 // Leer todas las inversiones desde Firebase (Firestore Admin)
 export async function loadInversiones() {
