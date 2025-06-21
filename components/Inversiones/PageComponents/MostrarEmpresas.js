@@ -22,9 +22,13 @@ function MostrarEmpresas() {
   const [error, setError] = useState(null);        
     
   const {rsBsqEmpresas, setRsBsqEmpresas} = useContext(MyContext); 
-   
+  
+  const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES   
+    
   const entorno = process.env.NEXT_PUBLIC_ENTORNO;  //nuevo    
   
+     
+    
     
   useEffect(() => {
   const fetchData = async () => {
@@ -91,7 +95,7 @@ function MostrarEmpresas() {
                <div className="detalle-emp">
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <img
-                      src={`/inversion-${item.owner}-${item.title}-0.jpg`}
+                      src={`${rutaImagen}/inversion-${item.owner}-${item.title}-0.jpg`}
                       className="img-emp"
                       alt={item.title}
                       onError={(e) => {
