@@ -55,9 +55,9 @@ function MostrarEmpresas() {
       setRsBsqEmpresas(dataEmpresas.res);
 
       setLoading(false);
-      console.log('resp empresas:', dataEmpresas.res);
+      console.log('resp empresas Mostar empresas:', dataEmpresas.res);
     } catch (error) {
-      console.error("Error al cargar empresas:", error);
+      console.error("Error al cargar empresas :", error);
       // setError(error);
     }
   };
