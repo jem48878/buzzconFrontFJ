@@ -35,7 +35,7 @@ function MostrarEmpresas() {
     try {  
         
       let dataEmpresas = null      //nuevo
-      console.log("ENTORNO:" . entorno)        
+      console.log("ENTORNO:" , entorno)        
       if ( entorno == 'local') {   //nuevo
           const entrada = "" ;
           dataEmpresas = await searchInversiones(entrada)
