@@ -20,6 +20,9 @@ import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
 export async function POST(request) {
   try {
+      
+    console.log("+++++ApiAgregarInversiones++++++");    
+      
     // Obtener los datos del cuerpo de la solicitud
     const body = await request.json();
     

@@ -17,6 +17,9 @@ export async function GET(request) {
     technologies:tecnologiasSeleccionadas ,
     contract: contrato
     */
+    console.log("+++++ApiMockInversiones++++++");  
+      
+      
     const { searchParams } = new URL(request.url);
 
     const q             = searchParams.get('q');  
