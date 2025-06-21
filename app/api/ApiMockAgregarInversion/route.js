@@ -4,8 +4,10 @@ import path from 'path';
 
 
 //import DataInversiones from '@/data/DataInversiones';
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStoreServer';
+import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
-import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
                                                        
 //localhost:3000/api/ApiMockAgregar
 //  owner:string
