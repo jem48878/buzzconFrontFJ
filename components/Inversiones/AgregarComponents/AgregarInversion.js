@@ -114,6 +114,8 @@ function AgregarInversion() {
     }        
 
    const entorno = process.env.NEXT_PUBLIC_ENTORNO;       //nuevo   
+   const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES    
+
 
    const handleAgregar = async () => {
         
@@ -210,10 +212,10 @@ function AgregarInversion() {
         
              } //nuevo fin else api local
             
-            
-             setAltaOK(true)  
-             setModalAbierto(true)
-                 
+             if (!file) {
+                setAltaOK(true)  
+                setModalAbierto(true)
+             }     
              if (file) {
                console.log("fileViejo:" , file.name )
         
@@ -225,13 +227,25 @@ function AgregarInversion() {
                //formData.append('filename', 'nuevo-nombre.jpg'); // nombre deseado
                formData.append('filename', nvoNombre); // nombre deseado
           
-               //const res = await fetch('/api/ApiMockSubirImagen', {
-               const res = await fetch('/api/ApiSubirImagenSupaBase', {            
+               if (rutaImagen=="") {     
+                   const res = await fetch('/api/ApiMockSubirImagen', {
+                   method: 'POST',
+                   body: formData,                       
+                  });
+                  const data = await res.json(); 
+                  setAltaOK(true)  
+                  setModalAbierto(true)   
+               } 
+               else {               
+                  const res = await fetch('/api/ApiSubirImagenSupaBase', {            
                    method: 'POST',
                    body: formData,
-                });
-                const data = await res.json();
-             }
+                  });
+                  const data = await res.json();  
+                  setAltaOK(true)  
+                  setModalAbierto(true)     
+                }     
+              }
              
           } //fin se ingresaon campos obligatorios
           else {
