@@ -34,6 +34,7 @@ function DetalleInversion({ owner , title , opcion}) {
     
     
    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+   const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES       
     
    useEffect(() => {
    const fetchData = async () => {
@@ -91,7 +92,7 @@ function DetalleInversion({ owner , title , opcion}) {
           <div className="cabecera-container-inv">       
             <div className="cabecera-imagen-inv" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '20px', fontWeight: 'bold'}}>               
               <img
-                    src={'/inversion-' + data.owner + '-' + data.title + '-0.jpg'}
+                    src={'${rutaImagen}/inversion-' + data.owner + '-' + data.title + '-0.jpg'}
                     alt={data.title}
                     onError={(e) => {
                       e.target.onerror = null; 

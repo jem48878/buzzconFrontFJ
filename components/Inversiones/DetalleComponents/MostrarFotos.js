@@ -13,7 +13,7 @@ import { useState, useEffect , useContext } from 'react';
 import React from 'react';
 
 import { FaFileUpload } from "react-icons/fa";  
- 
+
 
 function MostrarFotos({ owner , title , opcion}) {
     
@@ -32,12 +32,13 @@ function MostrarFotos({ owner , title , opcion}) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null); 
   const [nroNvaFoto, setNroNvaFoto] = useState(0);           
-    
+   
+  const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES       
    
   //cargar fotos    
   useEffect(() => {
       if (nroCarga > 0 && opcion != "agregar" ) {
-         const nextSrc = `/inversion-${owner}-${title}-${nroCarga}.jpg`;
+         const nextSrc = `${rutaImagen}/inversion-${owner}-${title}-${nroCarga}.jpg`;
          const img = new Image();
          img.onload = () => {
              setArrayFotos(prev => [...new Set([...prev, nroCarga])].sort((a, b) => a - b));
@@ -106,7 +107,8 @@ function MostrarFotos({ owner , title , opcion}) {
              //formData.append('filename', 'nuevo-nombre.jpg'); // nombre deseado
              formData.append('filename', nvoNombre); // nombre deseado
           
-             const res = await fetch('/api/ApiMockSubirImagen', {
+             //const res = await fetch('/api/ApiMockSubirImagen', {
+             const res = await fetch('/api/ApiSubirImagenSupaBase', {      
                  method: 'POST',
                  body: formData,
              });
@@ -191,7 +193,7 @@ function MostrarFotos({ owner , title , opcion}) {
 
           <div className="fotos-box">
                  <img
-                    src={`/inversion-${owner}-${title}-${nroFoto}.jpg`}
+                    src={`${rutaImagen}/inversion-${owner}-${title}-${nroFoto}.jpg`}
                     alt="NO hay fotos Cargadas"
                     
                 />
