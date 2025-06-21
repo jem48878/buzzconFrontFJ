@@ -92,7 +92,7 @@ function DetalleInversion({ owner , title , opcion}) {
           <div className="cabecera-container-inv">       
             <div className="cabecera-imagen-inv" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontSize: '20px', fontWeight: 'bold'}}>               
               <img
-                    src={'${rutaImagen}/inversion-' + data.owner + '-' + data.title + '-0.jpg'}
+                    src={`${rutaImagen}/inversion-${data.owner}-${data.title}-0.jpg`}                    
                     alt={data.title}
                     onError={(e) => {
                       e.target.onerror = null; 
