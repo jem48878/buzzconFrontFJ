@@ -225,7 +225,8 @@ function AgregarInversion() {
                //formData.append('filename', 'nuevo-nombre.jpg'); // nombre deseado
                formData.append('filename', nvoNombre); // nombre deseado
           
-               const res = await fetch('/api/ApiMockSubirImagen', {
+               //const res = await fetch('/api/ApiMockSubirImagen', {
+               const res = await fetch('/api/ApiSubirImagenSupaBase', {            
                    method: 'POST',
                    body: formData,
                 });

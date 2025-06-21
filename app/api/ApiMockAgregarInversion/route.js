@@ -1,8 +1,6 @@
 
-import { writeFile, readFile } from 'fs/promises';
-import path from 'path';
-
-
+//import { writeFile, readFile } from 'fs/promises';
+//import path from 'path';
 //import DataInversiones from '@/data/DataInversiones';
 //import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
 //import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStoreServer';
@@ -37,7 +35,7 @@ export async function POST(request) {
     
     const imagen       = ""
     
-    console.log("--agregar---------------------")
+    console.log("--agregar-------api------------")
     console.log("owner        :"  + owner ) 
     console.log("title        :"  + title )   
     console.log("tags         :"  + tags )    
