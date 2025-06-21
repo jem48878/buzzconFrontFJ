@@ -3,6 +3,7 @@ const FIREBASE_URL = 'https://databuzzconfrontnx-default-rtdb.firebaseio.com/dat
 // Leer todas las inversiones desde Firebase
 export async function loadInversiones() {
   try {
+    console.log("load fireBase")    
     const res = await fetch(FIREBASE_URL);
     const data = await res.json();
     // Convertir el objeto a array
@@ -17,6 +18,7 @@ export async function loadInversiones() {
 // Agregar nueva inversión
 export async function addInversion(inversion) {
   try {
+    console.log("add fireBase")     
     const res = await fetch(FIREBASE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
