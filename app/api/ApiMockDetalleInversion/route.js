@@ -1,5 +1,11 @@
-import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+
 //import DataInversiones from '@/data/DataInversiones';
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStoreServer';
+
+import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
+
+
 
 export async function GET(request) {
   try {
