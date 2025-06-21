@@ -7,7 +7,7 @@ export async function POST(req) {
   const file = formData.get('file');
   const customName = formData.get('filename'); // ← nombre opcional    
     
-  console.log("api subir" , file , 'nuevo nombre:' , customName)    
+  console.log("+++++ApiMockSubirImage++++++" , file , 'nuevo nombre:' , customName)    
 
   if (!file) {
     return NextResponse.json({ message: 'No file provided' }, { status: 400 });

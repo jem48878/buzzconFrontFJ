@@ -35,6 +35,9 @@ function MostrarFotos({ owner , title , opcion}) {
    
   const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES       
    
+  
+  
+  
   //cargar fotos    
   useEffect(() => {
       if (nroCarga > 0 && opcion != "agregar" ) {
@@ -103,17 +106,24 @@ function MostrarFotos({ owner , title , opcion}) {
         
              //const nvoNombre = 'inversion-' + owner + '-' + title + '-' + nuevoNroFoto + '.jpg'   
              const nvoNombre = `inversion-${owner}-${title}-${nuevoNroFoto}.jpg`;
-             console.log("fileNuevo:" , nvoNombre )
-             //formData.append('filename', 'nuevo-nombre.jpg'); // nombre deseado
+             console.log("fileNuevo:" , nvoNombre )          
              formData.append('filename', nvoNombre); // nombre deseado
           
-             //const res = await fetch('/api/ApiMockSubirImagen', {
-             const res = await fetch('/api/ApiSubirImagenSupaBase', {      
-                 method: 'POST',
-                 body: formData,
-             });
-             const data = await res.json();
-            
+             if (rutaImagen=="") {
+                 const res = await fetch('/api/ApiMockSubirImagen', {
+                    method: 'POST',
+                    body: formData,
+                 });
+                 const data = await res.json();             
+             }
+             else {
+                const res = await fetch('/api/ApiSubirImagenSupaBase', {      
+                   method: 'POST',
+                   body: formData,
+                });
+                const data = await res.json();              
+             }    
+             
              setNroNvaFoto(nuevoNroFoto);
              setArrayFotos((prev) =>[...new Set([...prev, nuevoNroFoto])].sort((a, b) => a - b));
              setNroFoto(nuevoNroFoto); 
