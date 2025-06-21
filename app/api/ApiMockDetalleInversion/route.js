@@ -9,7 +9,8 @@ import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
 export async function GET(request) {
   try {
-    
+    console.log("+++++ApiMockDetalleInversion++++++");  
+      
     const { searchParams } = new URL(request.url);
 
     const owner     = searchParams.get('owner');  

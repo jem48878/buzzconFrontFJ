@@ -13,7 +13,7 @@ export async function POST(req) {
   const file = formData.get('file');
   const customName = formData.get('filename'); // nombre personalizado
 
-  console.log("2api subir supabase:", file, 'nuevo nombre supabase:', customName);
+  console.log("+++++ApiSubirImageSubaBase++++++", file, 'nuevo nombre supabase:', customName);
 
   if (!file) {
     return NextResponse.json({ message: 'No file provided' }, { status: 400 });

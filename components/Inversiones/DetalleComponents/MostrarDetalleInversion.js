@@ -33,7 +33,7 @@ function DetalleInversion({ owner , title , opcion}) {
    }, []);
     
     
-   const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+   const entorno    = process.env.NEXT_PUBLIC_ENTORNO;     
    const rutaImagen = process.env.NEXT_PUBLIC_URL_IMAGENES       
     
    useEffect(() => {
