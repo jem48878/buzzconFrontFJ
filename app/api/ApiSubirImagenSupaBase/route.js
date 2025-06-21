@@ -48,7 +48,7 @@ export async function POST(req) {
       .from('imagenesbuzzconfj')
       .getPublicUrl(filePath);
 
-    console.log ("Url generada para supabase:" , url: data.publicUrl)  ;
+    console.log ("Url generada para supabase:" , data.publicUrl)  ;
       
     return NextResponse.json({ message: 'Archivo subido correctamente', url: data.publicUrl });
   } catch (error) {
