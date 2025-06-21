@@ -12,7 +12,7 @@ import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
 export async function searchInversiones(entrada) {
     try  {
-      console.log("uso de FireBase")    
+      console.log("uso de FireBase Function")    
       const res = await getInversiones(entrada) ;         
       return { res }; 
     }
@@ -200,7 +200,7 @@ async function getInversiones(entrada) {
  
 export async function searchUnaInversion(entrada) {
     try  {
-      console.log("uso de FireBase UnaInversion", )    
+      console.log("uso de FireBase UnaInversion Function", )    
       const res = await getUnaInversion(entrada) ;         
       return { res }; 
     }
@@ -241,7 +241,7 @@ async function getUnaInversion(entrada) {
 export async function agregarInversion(entrada) {
   try {
     
-    console.log("--agregar---------------------" ,  JSON.stringify(entrada))
+    console.log("--agregar-----------function--------" ,  JSON.stringify(entrada))
     //console.log("owner        :"  + entrada.owner ) 
     //console.log("title        :"  + entrada.title )   
     //console.log("tags         :"  + entrada.tags )    
