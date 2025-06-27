@@ -1,0 +1,53 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  /*height: 100%;*/
+  font-family: Inter, sans-serif;
+  overflow: hidden; /* 🔥 evita scroll vertical y horizontal */
+}
+
+/* NAVBAR */
+.navbar {
+  height: 80px;
+}
+
+/* CONTENIDO BAJO EL MENÚ */
+.menu-content {
+  height: calc(100vh - 80px); /* 🔥 ajusta altura para que NO haya scroll */
+  padding: 3rem;
+  background: linear-gradient(to bottom, #087571, #03302e);
+  overflow: hidden;
+}
+
+/* MENÚ: Agranda texto y cambia cursor */
+.navbar-nav .nav-link {
+  font-size: 1.2rem !important;
+  cursor: pointer !important;
+}
+
+/* TÍTULO BuzzCon */
+.navbar-brand span {
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  margin-left: 0.5rem;
+}
+
+/* SEPARACIÓN ENTRE LOGO Y MENÚ */
+.navbar-brand {
+  margin-right: 3rem !important;
+}
+
+
+.mensaje-error {
+    font-size:  3.5rem ; 
+}
+
+.mensaje-pantalla {
+    font-size:  1.5rem ; 
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
