@@ -181,7 +181,7 @@ export async function crearCuenta(entrada) {
       
    if (retorno === 0) {
       await enviarEmail({
-        name: "Buzzcon FJ",
+        name: "Verificacion Buzzcon FJ",
         email: email,
         title: "Bienvenido a la plataforma Buzzcon",
         message: url,
