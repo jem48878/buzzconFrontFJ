@@ -152,24 +152,47 @@ export async function crearCuenta(entrada) {
        } 
     }  
     */
-    /*
+    
     if (res == null ) {  
+      /*    
       const res2 = await fetch('/api/ApiSendEmail', {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json',
          },
         body: JSON.stringify({
-        to: 'estebanjaime01@yahoo.com.ar',
+        to: 'jem48878@hotmail.com',
         subject: '¡Hola!',
         message: 'Este es un correo de prueba desde Resend.',
-      }),
-   });
-
-   const data = await res2.json();
-   console.log(data);
+       }),
+     }); 
+     */
+     const res2= await fetch('/api/ApiSendEmail', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+         title: 'Consulta desde el sitio',
+         name: 'Esteban Jaime',
+         email: 'estebanjaime01@yahoo.com.ar',
+         message: 'Hola, esto es una prueba desde EmailJS usando backend.',
+         }),
+     });    
+        
+        
+     const data = await res2.json();
+     console.log("Respuesta completa de Resend:", data);
+     if (data.data?.error) {
+        console.log("❌ Error de envío:", data.data.error);
+     } else {
+        console.log("✅ Envío exitoso:", data.data);
+     }
+    
+        
+        
+        
+        
    }
-   */ 
+
     return { codRet: retorno , message: mensaje };    
     
   } catch (error) {
