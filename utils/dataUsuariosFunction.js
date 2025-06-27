@@ -167,6 +167,9 @@ export async function crearCuenta(entrada) {
        }),
      }); 
      */
+        
+        
+     /*    
      const res2= await fetch('/api/ApiSendEmail', {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
@@ -180,13 +183,13 @@ export async function crearCuenta(entrada) {
         
         
      const data = await res2.json();
-     console.log("Respuesta completa de Resend:", data);
+     console.log("Respuesta completa de Email:", data);
      if (data.data?.error) {
         console.log("❌ Error de envío:", data.data.error);
      } else {
         console.log("✅ Envío exitoso:", data.data);
      }
-    
+     */
         
         
         
