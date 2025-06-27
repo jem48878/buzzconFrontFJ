@@ -1,5 +1,5 @@
 import { addUsuario , loadUsuario , updateInversion } from '@/utils/dataUsuariosFireBase';
-
+import emailjs from 'emailjs-com';
     
 /**/    
 /* Login */    
@@ -82,7 +82,7 @@ async function getUsuario(entrada , opcion) {
       break;
   }
     
-  //console.log('Salida :' , JSON.stringify(usuario) )
+  console.log('Salida getUsuario:' , JSON.stringify(usuario) )
   return usuario || null;      
 }    
 
@@ -100,9 +100,12 @@ export async function crearCuenta(entrada) {
     const password = entrada.password    
     const email  = entrada.email
     console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
+     
+    const dominio = process.env.NEXT_PUBLIC_DOMINIO;    
       
     let retorno = 0
     let mensaje = "alta OK"
+    
     /*  para subir
     if (usuario == "fj111269" ) {                 
         mensaje = "Usuario ya registrado"; 
@@ -110,14 +113,18 @@ export async function crearCuenta(entrada) {
     }        
     */
     
-    const res = await getUsuario(entrada , 2 ) ;   
+    const res = await getUsuario(entrada , 2 ) ;  
+    
+    let url =""
+    
     if ( res == null || res.estado != 2) {
        const ahora           = new Date();
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        const estado          = 0  ;
-       const codVerificacion =  generarIdUnico() ;
+       const codVerificacion = generarIdUnico() ;
     
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
        const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion }; 
        if (res == null) {
           await addUsuario(nvoUsuario);
@@ -130,7 +137,7 @@ export async function crearCuenta(entrada) {
         retorno = 999    
         mensaje = "Usuario ya registrado"; 
     }  
-      
+   
       
     /*
     if (res == null ) {
@@ -152,50 +159,35 @@ export async function crearCuenta(entrada) {
        } 
     }  
     */
-    
+    /*
     if (res == null ) {  
-      /*    
       const res2 = await fetch('/api/ApiSendEmail', {
         method: 'POST',
         headers: {
          'Content-Type': 'application/json',
          },
         body: JSON.stringify({
-        to: 'jem48878@hotmail.com',
+        to: 'estebanjaime01@yahoo.com.ar',
         subject: '¡Hola!',
         message: 'Este es un correo de prueba desde Resend.',
-       }),
-     }); 
-     */
-        
-        
-     /*    
-     const res2= await fetch('/api/ApiSendEmail', {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-         title: 'Consulta desde el sitio',
-         name: 'Esteban Jaime',
-         email: 'estebanjaime01@yahoo.com.ar',
-         message: 'Hola, esto es una prueba desde EmailJS usando backend.',
-         }),
-     });    
-        
-        
-     const data = await res2.json();
-     console.log("Respuesta completa de Email:", data);
-     if (data.data?.error) {
-        console.log("❌ Error de envío:", data.data.error);
-     } else {
-        console.log("✅ Envío exitoso:", data.data);
-     }
-     */
-        
-        
-        
-        
-   }
+      }),
+   });
 
+   const data = await res2.json();
+   console.log(data);
+   }
+   */ 
+   
+      
+   if (retorno === 0) {
+      await enviarEmail({
+        name: "Buzzcon FJ",
+        email: email,
+        title: "Bienvenido a la plataforma Buzzcon",
+        message: url,
+      });
+    }  
+        
     return { codRet: retorno , message: mensaje };    
     
   } catch (error) {
@@ -305,7 +297,7 @@ export async function validarCodigo(entrada) {
                else {
                */
                    await updateInversion(res.id, {                     
-                     estado: 2,
+                   estado: 2,
                    });
                //}
            }               
@@ -342,10 +334,43 @@ export async function validarCodigo(entrada) {
 
 
 
+export async function enviarEmail({ name, email, title, message }) {
+  try {
+    const result = await emailjs.send(
+      'service_uhiry3n',         // tu service ID
+      'template_luyvw0n',        // tu template ID
+      {
+      title,
+      name,
+      email,
+      message,
+       },
+      'Cr46Wdhz3tydtaB4W'        // tu PUBLIC KEY (user ID)
+    );
+
+    console.log('✅ Correo enviado:', result.text);
+  } catch (error) {
+    console.error('❌ Error al enviar:', error);
+  }
+}
+
+
+export function esEmailValido(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
 
 
 
-
+export function validarPassword(password) {
+  return {
+    longitud: password.length >= 8,
+    mayuscula: /[A-Z]/.test(password),
+    minuscula: /[a-z]/.test(password),
+    numero: /\d/.test(password),
+    especial: /[!@#$%^&*(),.?":{}|<>+-]/.test(password),
+  };
+}
 
 
 
