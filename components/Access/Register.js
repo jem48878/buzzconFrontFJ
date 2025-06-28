@@ -6,6 +6,7 @@ import { crearCuenta }      from '@/utils/dataUsuariosFunction';
 import { validarNvaCuenta } from '@/utils/dataUsuariosFunction';  
 import { validarPassword }  from '@/utils/dataUsuariosFunction'; 
 import { esEmailValido }    from '@/utils/dataUsuariosFunction'; 
+import { reEnviarCorreo }   from '@/utils/dataUsuariosFunction'; 
 
 import Image from 'next/image';
 import React, { useState , useContext , useEffect } from 'react';
@@ -66,13 +67,16 @@ function Register() {
     }    
    }, [countdown, validando]);  
     
-        
-  const timeOutValidacion = (accion) => {
+  
+  
+  const timeOutValidacion = async (accion) => {
     //console.log("errorvalidacion:" , accion)  
     if (accion === 'registrarse') {
        setValidando(false);   
     } 
     if (accion === 'reenviar') {
+       const entrada = {usuario , email };       
+       const data = await reEnviarCorreo(entrada)    
        setValidando(true);   
        setResetId((prev) => prev + 1);
     }

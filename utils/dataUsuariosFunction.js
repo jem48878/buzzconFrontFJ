@@ -9,6 +9,7 @@ export async function loginUsuario(entrada) {
   try {
     
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;             
+    
     console.log("--login------function--------------" ,  JSON.stringify(entrada))    
     
     const usuario  = entrada.usuario
@@ -49,8 +50,8 @@ export async function loginUsuario(entrada) {
     
     
 async function getUsuario(entrada , opcion) {  
-  console.log("desde get login usuario:" + JSON.stringify(entrada));        
-  console.log("desde get login opcion:" + opcion);            
+  console.log("desde getUsuario:" + JSON.stringify(entrada));        
+  console.log("desde getUsuario opcion:" + opcion);            
   const DataUsuarios = await loadUsuario(); 
     
   //console.log("desde get dataUsuario:" + JSON.stringify(DataUsuarios));          
@@ -121,8 +122,9 @@ export async function crearCuenta(entrada) {
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        const estado          = 0  ;
        const codVerificacion = generarIdUnico() ;
-    
-       url = `http://localhost:3000/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       const dominio = process.env.NEXT_PUBLIC_DOMINIO  
+         
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
        const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion }; 
        if (res == null) {
           await addUsuario(nvoUsuario);
@@ -345,9 +347,9 @@ export async function enviarEmailMsg({ name, email, title, message }) {
       'Cr46Wdhz3tydtaB4W'        // tu PUBLIC KEY (user ID)
     );
 
-    console.log('✅ Correo enviado1:', result.text);
+    console.log('✅ Correo enviado Msg:', result.text);
   } catch (error) {
-    console.error('❌ Error al enviar1:', error);
+    console.error('❌ Error al enviar Msg:', error);
   }
 }
 
@@ -365,9 +367,9 @@ export async function enviarEmailLink({ email, link, time }) {
       'Cr46Wdhz3tydtaB4W'        // tu PUBLIC KEY (user ID)
     );
 
-    console.log('✅ Correo enviado2:', result.text);
+    console.log('✅ Correo enviado Link:', result.text);
   } catch (error) {
-    console.error('❌ Error al enviar2:', error);
+    console.error('❌ Error al enviar Link:', error);
   }
 }
 
@@ -426,4 +428,45 @@ export async function recuperarPass(entrada) {
      
   }
 }
+
+
+
+export async function reEnviarCorreo(entrada) {
+  try {
+    
+    console.log("--Re Enviar Correo--function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    const email     = entrada.email
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const dominio = process.env.NEXT_PUBLIC_DOMINIO  
+    
+    const res = await getUsuario(entrada , 2 ) ;  
+      
+    console.log("usuario:" + usuario +  " correo:" + email) 
+      
+    if ( res !== null) {  
+        console.log("re-envio correo:" , res.codVerificacion)
+        const url = `${dominio}/Access/VerifyRegistration/${usuario}/${res.codVerificacion}`   
+        console.log("url:" , url)
+        await enviarEmailLink({        
+        email: email,
+        time: new Date().toLocaleTimeString('es-AR') ,
+        link: url,
+      });
+    }
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+      
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
+
 
