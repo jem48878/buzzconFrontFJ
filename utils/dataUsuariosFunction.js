@@ -100,8 +100,6 @@ export async function crearCuenta(entrada) {
     const password = entrada.password    
     const email  = entrada.email
     console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
-     
-    const dominio = process.env.NEXT_PUBLIC_DOMINIO;    
       
     let retorno = 0
     let mensaje = "alta OK"
@@ -124,7 +122,7 @@ export async function crearCuenta(entrada) {
        const estado          = 0  ;
        const codVerificacion = generarIdUnico() ;
     
-       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       url = `http://localhost:3000/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
        const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion }; 
        if (res == null) {
           await addUsuario(nvoUsuario);
@@ -177,14 +175,12 @@ export async function crearCuenta(entrada) {
    console.log(data);
    }
    */ 
-   
       
    if (retorno === 0) {
-      await enviarEmail({
-        name: "Verificacion Buzzcon FJ",
+      await enviarEmailLink({        
         email: email,
-        title: "Bienvenido a la plataforma Buzzcon",
-        message: url,
+        time: new Date(),
+        link: url,
       });
     }  
         
@@ -332,9 +328,10 @@ export async function validarCodigo(entrada) {
   }
 }
 
-
-
-export async function enviarEmail({ name, email, title, message }) {
+/**/    
+/* Enviar Correo 2 Template */    
+/**/   
+export async function enviarEmailMsg({ name, email, title, message }) {
   try {
     const result = await emailjs.send(
       'service_uhiry3n',         // tu service ID
@@ -348,12 +345,35 @@ export async function enviarEmail({ name, email, title, message }) {
       'Cr46Wdhz3tydtaB4W'        // tu PUBLIC KEY (user ID)
     );
 
-    console.log('✅ Correo enviado:', result.text);
+    console.log('✅ Correo enviado1:', result.text);
   } catch (error) {
-    console.error('❌ Error al enviar:', error);
+    console.error('❌ Error al enviar1:', error);
   }
 }
 
+
+export async function enviarEmailLink({ email, link, time }) {
+  try {
+    const result = await emailjs.send(
+      'service_uhiry3n',         // tu service ID
+      'template_k3w94sh',        // tu template ID
+      {
+      email,
+      link,
+      time      
+       },
+      'Cr46Wdhz3tydtaB4W'        // tu PUBLIC KEY (user ID)
+    );
+
+    console.log('✅ Correo enviado2:', result.text);
+  } catch (error) {
+    console.error('❌ Error al enviar2:', error);
+  }
+}
+
+/**/    
+/* Validaciones Registracion */    
+/**/   
 
 export function esEmailValido(email) {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -373,6 +393,37 @@ export function validarPassword(password) {
 }
 
 
-
-
+/**/    
+/* Recuperar Contraseña */    
+/**/   
+export async function recuperarPass(entrada) {
+  try {
+    
+    console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const res = await getUsuario(entrada , 2 ) ;   
+    console.log("usuario:" + usuario +  " correo:" + res.email) 
+    if ( res !== null) {        
+        let mensaje = `Le informamos su password registrado en BuzzconFJ: ${res.password}`         
+        await enviarEmailMsg({        
+        title: "BuzzconFJ  Recupero de Contraseña",    
+        name: res.usuario,    
+        email: res.email,
+        message : mensaje    
+      });   
+    }
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
 

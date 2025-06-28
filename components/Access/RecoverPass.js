@@ -1,27 +1,21 @@
 "use client";
 import Link          from 'next/link';
 import MyContext from '@/contexts/MyContext';
-import { loginUsuario } from '@/utils/dataUsuariosFunction';  
+import { recuperarPass } from '@/utils/dataUsuariosFunction';  
 import Image from 'next/image';
 import React, { useState , useContext } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { FaEyeSlash } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
 
-
-function Login() {
-    
-  const {usrLogueado, setUsrLogueado} = useContext(MyContext); 
+function RecoverPass() {
     
   const [usuario, setUsuario] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const router = useRouter();        
-  
+  const [enviado, setEnviado] = useState(false);            
+  const [mensaje, setMensaje] = useState("");  
     
   
   const handleSubmit = async (e) => {
@@ -32,17 +26,15 @@ function Login() {
     try {
       let data = null ;    
       
-      const entrada = {usuario , password };   
-      data = await loginUsuario(entrada) 
+      const entrada = {usuario };   
+      data = await recuperarPass(entrada) 
         
       if (data.codRet == 0) {    
-        setUsrLogueado(usuario) 
-        console.log("Login usrLogueado:" , usrLogueado)    
-        console.log("Login usuario:" , usuario)      
-        router.push(`/`);         
+        setEnviado(true) 
+        setMensaje("Se ha enviado un correo  verifique su casilla")
       } 
       else {          
-          throw new Error (data.message)
+         throw new Error (data.message)
       }
     } catch (err) {       
       setError('Error:' + err.message);
@@ -71,6 +63,7 @@ function Login() {
 
       {/* Columna derecha con formulario */}
       <div className="w-100 w-md-50 d-flex align-items-center justify-content-center">
+        {!enviado && (
         <div
           className="p-4"
           style={{
@@ -81,7 +74,9 @@ function Login() {
             boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
           }}
         >
-          <h2 className="text-center mb-4 text-dark">LOGIN</h2>
+          <h2 className="text-center mb-4 text-dark">Recuperar Contraseña</h2>
+    
+      
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
@@ -94,26 +89,8 @@ function Login() {
               />
              </div>
 
-             <div className="mb-3">
-               <div className="input-group">
-                 <input
-                   type={showPassword ? 'text' : 'password'}
-                   className="form-control"
-                   placeholder="Ingrese su contraseña"
-                   value={password}
-                   onChange={(e) => setPassword(e.target.value)}
-                   required
-                />
-                <span
-                   className="input-group-text"
-                   style={{ cursor: 'pointer', userSelect: 'none' }}
-                   onClick={() => setShowPassword(!showPassword)}
-                 >
-                  {showPassword ? <FaEyeSlash/> : <FaEye/>}
-                 </span>
-               </div>
-            </div>
-            <button
+             
+             <button
               type="submit"
               className="btn w-100"
               style={{
@@ -122,10 +99,10 @@ function Login() {
               }}
               disabled={loading}
             >
-              {loading ? 'Validando...' : 'ENTRAR'}
+              {loading ? 'Enviando...' : 'ENVIAR CORREO'}
             </button>
           </form>
-
+          
           {error && (            
             <p className="mt-3 text-center text-danger" style={{ fontSize: '0.9rem' }}>
               {error}
@@ -133,19 +110,39 @@ function Login() {
               
           )}
 
-          <p className="text-center mt-3 mb-0" style={{ fontSize: '0.9rem', color: '#333' }}>
-            ¿No tenés cuenta?{' '}
-            <a href="./Register" className="fw-bold text-primary">
-              Registrarse
+          <p className="text-center mt-3 mb-0" style={{ fontSize: '0.9rem', color: '#333' }}>            
+            <a href="./Login" className="fw-bold text-primary">
+              Login
             </a>
           </p>
-          <p className="text-center mt-3 mb-0" style={{ fontSize: '0.9rem', color: '#333' }}>           
-            <a href="./RecoverPass" className="fw-bold text-primary">
-              Recuperar Contraseña
-            </a>
-          </p>    
         </div>
-            
+      )}
+      
+      {enviado && (
+        <div
+          className="p-4"
+          style={{
+            width: '90%',
+            maxWidth: '360px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            borderRadius: '15px',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+          }}
+         >
+          <h2 className="text-center mb-4 text-dark">Recuperar Contraseña</h2>
+                   
+          <p className="mt-3 text-center text-success" style={{ fontSize: '1.5rem' }}>
+              {mensaje}
+          </p>
+          <p className="text-center mt-3 mb-0" style={{ fontSize: '0.9rem', color: '#333' }}>            
+            <a href="./Login" className="fw-bold text-primary">
+              Login
+            </a>
+          </p>
+        </div>
+      )}
+      
+      
       </div>
       {/*  fin formulario */}
             
@@ -156,4 +153,4 @@ function Login() {
 }
 
 
-export default Login;
+export default RecoverPass;
