@@ -33,24 +33,33 @@ function VerifyRegistration({ params }) {
   
     
   const validar = async () => {
-      
-      let data = null ;    
-      
+    
+    try {
+      let data = null ;        
       const entrada = { user , code };   
       data = await validarCodigo(entrada) 
            
-      console.log("retorno:" , data.codRet)       
-      console.log("mensaje:" , data.message)    
+      //console.log("retorno:" , data.codRet)       
+      //console.log("mensaje:" , data.message)    
         
-      if (data.codRet == 0) { 
+       if (data.codRet != 0 )  throw new Error (data.message)        
+      
+      //if (data.codRet == 0) { 
          setMensaje("Verificado")    
          setError(null)  
-      }
-      else {
-         setMensaje("NO Verificado")             
-         setError(data.message)  
-      }
-      setValidando(false)
+      //}
+      //else {
+      //   setMensaje("NO Verificado")             
+      //     setError(data.message)  
+      //}
+      //setValidando(false)
+     
+    } catch (err) {
+      setMensaje("NO Verificado")           
+      setError('Error:' + err.message ) ;      
+    } finally {
+      setValidando(false);
+    }   
   };    
   
       

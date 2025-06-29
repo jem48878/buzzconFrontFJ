@@ -34,16 +34,14 @@ function Login() {
       
       const entrada = {usuario , password };   
       data = await loginUsuario(entrada) 
-        
-      if (data.codRet == 0) {    
-        setUsrLogueado(usuario) 
-        console.log("Login usrLogueado:" , usrLogueado)    
-        console.log("Login usuario:" , usuario)      
-        router.push(`/`);         
-      } 
-      else {          
-          throw new Error (data.message)
-      }
+      
+      if (data.codRet != 0 )  throw new Error (data.message)
+      
+      setUsrLogueado(usuario) 
+      console.log("Login usrLogueado:" , usrLogueado)    
+      console.log("Login usuario:" , usuario)      
+      router.push(`/`);         
+      
     } catch (err) {       
       setError('Error:' + err.message);
     } finally {
