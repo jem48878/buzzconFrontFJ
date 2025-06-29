@@ -6,13 +6,14 @@ import { ContextProvider } from '@/contexts/MyContext';
 
 import {Suspense} from 'react' ;
 import AgregarInversion from '@/components/Inversiones/AgregarComponents/AgregarInversion';
-
+import Encabezado from '@/components/Inversiones/PageComponents/Encabezado';
 
 
 function Home() { 
   
   return (
-    <ContextProvider>   
+    <ContextProvider> 
+    <Encabezado text="Encabezado"/>        
      <div className='body'>      
         <AgregarInversion/>  
         <br/>        
