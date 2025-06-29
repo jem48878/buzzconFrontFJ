@@ -28,14 +28,12 @@ function RecoverPass() {
       
       const entrada = {usuario };   
       data = await recuperarPass(entrada) 
-        
-      if (data.codRet == 0) {    
-        setEnviado(true) 
-        setMensaje("Se ha enviado un correo  verifique su casilla")
-      } 
-      else {          
-         throw new Error (data.message)
-      }
+      
+      if (data.codRet != 0 )  throw new Error (data.message)    
+      
+      setEnviado(true) 
+      setMensaje("Se ha enviado un correo  verifique su casilla")
+      
     } catch (err) {       
       setError('Error:' + err.message);
     } finally {
@@ -99,7 +97,7 @@ function RecoverPass() {
               }}
               disabled={loading}
             >
-              {loading ? 'Enviando...' : 'ENVIAR CORREO'}
+              {loading ? 'Validando...' : 'ENVIAR CORREO'}
             </button>
           </form>
           

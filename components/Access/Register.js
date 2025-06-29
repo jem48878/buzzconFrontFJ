@@ -36,7 +36,8 @@ function Register() {
   const [validando, setValidando] = useState(false);                       
   const [timeout, setTimeout] = useState(0);                
   
-  const espera  = 90      
+  const espera  = 10
+  
   const [countdown, setCountdown] = useState(espera);  
   const [resetId, setResetId] = useState(0);
     
@@ -89,17 +90,14 @@ function Register() {
       
       const entrada = {usuario , password , email };   
       data = await validarNvaCuenta(entrada) 
-        
-      //console.log("retorno:" , data.codRet)       
-      //console.log("mensaje:" , data.message)
       
-      if (data.codRet == 0) { 
-         setUsrLogueado(usuario)      
-         router.push(`/`);  
-      }
+      if (data.codRet != 0 )  throw new Error (data.message)        
+      
+      setUsrLogueado(usuario)      
+      router.push(`/`);  
+      
     }
     catch (err) {
-      //setError('Error:' + err);
       //setError(err.message);    
       console.log("mensaje:" , err.message)    
     }
@@ -141,13 +139,12 @@ function Register() {
       
       //console.log("retorno:" , data.codRet)       
       //console.log("mensaje:" , data.message)
-        
-      if (data.codRet == 0) {    
-        setValidando(true) 
-        setMensaje("Esperando validacion de correo, verifique su casilla")
-      } else {
-        throw new Error (data.message);
-      }
+      
+      if (data.codRet != 0 )  throw new Error (data.message)    
+      
+      setValidando(true) 
+      setMensaje("Esperando validacion de correo, verifique su casilla")
+      
     } catch (err) {
       setError('Error:' + err.message ) ;      
     } finally {
@@ -264,14 +261,6 @@ function Register() {
               </span>
             </div>
           </div>
-
-          
-
-
-
-
-          
-          
           <button
             type="submit"
             className="btn w-100"
@@ -304,34 +293,74 @@ function Register() {
                 />    
                )}
             </p>
-         
-            <h5 style={{ fontFamily: 'monospace'}} className="text-white mensaje-pantalla">
-               {countdown} seg
-             </h5> {/* 🔄 CAMBIO */}
-             
-             {countdown === 0 && (
-               <p className="text-center mt-3 mb-0 text-white mensaje-pantalla">
-               <span
+
+            <div className="d-flex justify-content-center">-
+               <div className="p-0"  
+                    style={{
+                      width: '100%',
+                      maxWidth: '420px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                      borderRadius: '15px',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+                    }}
+                >
+                   {/*contenedor de dos columnas */}
+                   <div className="d-flex" style={{ height: '100%' }}> 
+                      {/* Columna izquierda */}
+                      <div className="w-25 d-flex justify-content-center align-items-center py-2">  
+                         < span className="mensaje-pantalla" style={{ fontFamily: 'monospace' }}>{countdown}</span>
+                      </div>
+                      {/* fin Columna izquierda */}
+
+                      {/* Línea divisoria */}
+                      <div style={{
+                          width: '2px',                
+                          backgroundColor: '#555',     
+                          height: '100%',              
+                        }}
+                       >
+                       </div>
+                       {/* Línea divisoria */}
+
+                       {/* Columna derecha */}
+                       <div className="w-75 d-flex justify-content-center align-items-center py-2">  
+                          <span className="mensaje-pantalla"
+                             style={{
+                                textDecoration: 'underline',
+                                cursor: countdown === 0 ? 'pointer' : 'not-allowed',
+                                color: countdown === 0 ? '#000' : '#999',
+                                fontSize:  '1.0rem',      
+                              }}
+                              onClick={countdown === 0 ? () => timeOutValidacion('reenviar') : undefined}
+                              aria-disabled={countdown !== 0}
+                           >
+                            Re-enviar correo
+                          </span>
+                       </div>  
+                       {/* fin Columna derecha */}
+                  </div> 
+                  {/* fin contenedor de dos columnas */}
+                </div>
+             </div>
+
+
+             {countdown === 0 && (              
+               <p className="text-center mt-3 mb-0 text-white ">
+                <span
                   style={{
                     textDecoration: 'underline',
                     cursor: 'pointer',
                     marginRight: '1rem',
+                    fontSize:  '1.0rem', 
                   }}
                   onClick={() => timeOutValidacion('registrarse')}
                 >
-                  Volver a Registración
+                  Registrarse
                 </span>
-                <span
-                   style={{
-                     textDecoration: 'underline',
-                     cursor: 'pointer',
-                   }}
-                   onClick={() => timeOutValidacion('reenviar')}
-                 >
-                 Enviar correo nuevamente
-                </span>
-                </p>
+               </p>
               )}
+              
+              
               
         </div>
       )} 
