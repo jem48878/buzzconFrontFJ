@@ -2,8 +2,9 @@ import { addUsuario , loadUsuario , updateInversion } from '@/utils/dataUsuarios
 import emailjs from 'emailjs-com';
     
 /**/    
-/* Login.js */    
-/**/ 
+/* Login */    
+/**/   
+    
 export async function loginUsuario(entrada) {
   try {
     
@@ -17,9 +18,21 @@ export async function loginUsuario(entrada) {
     
     let retorno = 0
     let mensaje = "Login OK"
-        
+    
+    /*  para subir 
+    if (usuario == "fj111269" ) {
+        if (password !== "prueba") {
+           retorno = 999
+           mensaje = "los datos ingresado no son valido";            
+        }  
+    }    
+    else{       
+       retorno = 998
+       mensaje = "Los datos ingresado no son validos";     
+    }    
+    */
     const res = await getUsuario(entrada , 1 ) ;   
-    //console.log("salida funcion getUsuario:" + JSON.stringify(res));          
+    console.log("salida funcion getUsuario:" + JSON.stringify(res));          
       
     if (res == null) {         
         mensaje = "Los datos ingresado no son valido"; 
@@ -63,30 +76,23 @@ async function getUsuario(entrada , opcion) {
        x.usuario.trim() === entrada.usuario.trim() &&
        x.codVerificacion.trim() === entrada.codVerificacion.trim()
       );
-      break;  
-    
-    case 4:
-       usuario = DataUsuarios.find(x => 
-       x.usuario.trim() === entrada.usuario.trim() &&
-       x.codVerificacionPass.trim() === entrada.codVerificacion.trim()
-      );
-      break;        
+      break;      
           
           
     default:
       break;
-  } 
-  //console.log('Salida getUsuario:' , JSON.stringify(usuario) )
+  }
+    
+  console.log('Salida getUsuario:' , JSON.stringify(usuario) )
   return usuario || null;      
 }    
 
 
-/*******************************************************************************************/
-/*******************************************************************************************/
 
 /**/    
-/* Register.js */    
-/**/
+/* Register */    
+/**/   
+    
 export async function crearCuenta(entrada) {
   try {
     
@@ -99,6 +105,13 @@ export async function crearCuenta(entrada) {
     let retorno = 0
     let mensaje = "alta OK"
     
+    /*  para subir
+    if (usuario == "fj111269" ) {                 
+        mensaje = "Usuario ya registrado"; 
+        retorno = 999
+    }        
+    */
+    
     const res = await getUsuario(entrada , 2 ) ;  
     
     let url =""
@@ -109,15 +122,10 @@ export async function crearCuenta(entrada) {
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        const estado          = 0  ;
        const codVerificacion = generarIdUnico() ;
-       
-       const fechaChgPass    = ahora.toLocaleDateString('es-AR');
-       const horaChgPass     = ahora.toLocaleTimeString('es-AR'); 
-       const codVerificacionPass = "" ;
-       
-       const dominio = process.env.NEXT_PUBLIC_DOMINIO      
+       const dominio = process.env.NEXT_PUBLIC_DOMINIO  
          
        url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
-       const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion , fechaChgPass , horaChgPass , codVerificacionPass }; 
+       const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion }; 
        if (res == null) {
           await addUsuario(nvoUsuario);
        }
@@ -169,17 +177,15 @@ export async function crearCuenta(entrada) {
    console.log(data);
    }
    */ 
-    
-   console.log("Url correo verificacion cuenta:" , url)          
-   /*  sirve     
+      
    if (retorno === 0) {
       await enviarEmailLink({        
         email: email,
-        time: new Date().toLocaleTimeString('es-AR'),
+        time: new Date(),
         link: url,
       });
     }  
-    */    
+        
     return { codRet: retorno , message: mensaje };    
     
   } catch (error) {
@@ -199,8 +205,9 @@ function generarIdUnico(longitud = 10) {
 
 
 
+
+
 /**/    
-/* Register.js
 /* Validar Nva Cuenta mientras se esta esperando despues de la registracion */    
 /**/   
 export async function validarNvaCuenta(entrada) {
@@ -215,6 +222,17 @@ export async function validarNvaCuenta(entrada) {
     
     let retorno = 0
     let mensaje = ""
+    
+    /*
+    if (usuario == "fj111269" ) {        
+        retorno = 0    
+        mensaje = "Usuario validdo"; 
+    }    
+    else{
+       retorno = 999    
+       mensaje = "usuario no validado";     
+    }    
+    */
     
     const res = await getUsuario(entrada , 2 ) ;   
     if ( res !== null) {
@@ -242,54 +260,7 @@ export async function validarNvaCuenta(entrada) {
 
 
 
-/**/ 
-/* Re-enviar Correo */ 
-/* Register.js
-/**/ 
-export async function reEnviarCorreo(entrada) {
-  try {
-    
-    console.log("--Re Enviar Correo--function-----------" ,  JSON.stringify(entrada))    
-    const usuario   = entrada.usuario
-    const email     = entrada.email
-    
-    let retorno = 0
-    let mensaje = ""
-    
-    const dominio = process.env.NEXT_PUBLIC_DOMINIO  
-    
-    const res = await getUsuario(entrada , 2 ) ;  
-      
-    console.log("usuario:" + usuario +  " correo:" + email) 
-      
-    if ( res !== null) {  
-        console.log("re-envio correo:" , res.codVerificacion)
-        const url = `${dominio}/Access/VerifyRegistration/${usuario}/${res.codVerificacion}`   
-        console.log("correo verificaicon re-envio url:" , url)
-        /*  
-        await enviarEmailLink({        
-           email: email,
-           time: new Date().toLocaleTimeString('es-AR') ,
-           link: url,
-        });
-        */
-    }
-    else {
-        retorno = 999;
-        mensaje = "Usuario no existe"
-    }     
-      
-    return { codRet: retorno , message: mensaje };    
-  } catch (error) {
-    return { codRet: 999 , message: error };
-     
-  }
-}
-
-
-
-/**/   
-/* VerifyRegistratatio.js
+/**/    
 /* Validar la url de registracion */    
 /**/   
 export async function validarCodigo(entrada) {
@@ -343,160 +314,14 @@ export async function validarCodigo(entrada) {
         mensaje = "No se encontradron los datos a verificar"; 
     } 
       
-    return { codRet: retorno , message: mensaje };
-    
-  } catch (error) {
-     return { codRet: 999 , message: error };
-  }
-}
-
-
-
-/*******************************************************************************************/
-/*******************************************************************************************/
-
-/**/    
-/* Recuperar Contraseña */ 
-/* RecoverPass.js
-/**/   
-export async function recuperarPass(entrada) {
-  try {
-    
-    console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
-    const usuario   = entrada.usuario
-    
-    let retorno = 0
-    let mensaje = ""
-        
-    const dominio = process.env.NEXT_PUBLIC_DOMINIO      
-      
-    const res = await getUsuario(entrada , 2 ) ;   
-    console.log("usuario:" + usuario +  " correo:" + res.email) 
-      
-    if ( res !== null && res.estado == 2) {         
-        let mensaje = `Le informamos su password registrado en BuzzconFJ: ${res.password}`
-        console.log("Mensaje correo:" , mensaje)
-        /* para correo con pass    
-        await enviarEmailMsg({        
-           title: "BuzzconFJ  Recupero de Contraseña",    
-           name: res.usuario,    
-           email: res.email,
-           message : mensaje    
-        });   
-        */
-        const ahora              = new Date();        
-        const fechaChgPass        = ahora.toLocaleDateString('es-AR');
-        const horaChgPass         = ahora.toLocaleTimeString('es-AR'); 
-        const codVerificacionPass = generarIdUnico() ;
-        const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
-        await updateInversion(res.id, cambioPass);
-                
-        const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
-        console.log("Url cambio pass correo:" , url)
-        /*  para correo con url cambiar contraseña
-        await enviarEmailLink({        
-          email: res.email,
-          time: new Date().toLocaleTimeString('es-AR'),
-          link: url,
-        });
-        */    
-        
-        
-    }
-    else {
-        retorno = 999;
-        mensaje = "Usuario no existe"
-    }     
-    return { codRet: retorno , message: mensaje };    
-  } catch (error) {
-    return { codRet: 999 , message: error };
-     
-  }
-}
-
-
-/************************************************************************************************/
-/************************************************************************************************/
-
-/**/    
-/* Cambiar Contraseña ChangePass.js*/    
-/**/   
-export async function cambiarContraseña(entrada) {
-  try {
-    
-    console.log("--Cambiar Contraseña--function-----------" ,  JSON.stringify(entrada))    
-    const usuario    = entrada.usuario
-    const password   = entrada.password
-    
-    let retorno = 0
-    let mensaje = ""
-    
-    const res = await getUsuario(entrada , 2 ) ;   
-    
-    if ( res !== null && res.estado == 2) {        
-        console.log("usuario:" + usuario +  " pass:" + res.password) 
-   
-        const nvaPass = {password}
-        await updateInversion(res.id, nvaPass);
-        console.log("Ok modificacion contraseña")
-    }
-    else {
-        retorno = 999;
-        mensaje = "Usuario no existe"
-    }     
-    return { codRet: retorno , message: mensaje };    
-  } catch (error) {
-    return { codRet: 999 , message: error };
-  }
-}
-
-
-/**/    
-/* Cambiar Contraseña */   
-/* Validar codigo ChangePass.js */
-/**/ 
-export async function validarCodigoPass(entrada) {
-  try {
-    
-    console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
-    const usuario          = entrada.user
-    const codVerificacion  = entrada.code        
-    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
-    
-    let retorno = 0
-    let mensaje = ""
-    //await sleep(2000);   //solo para ver el efecto de espera 
-    
-    entrada = {usuario , codVerificacion}; 
-    const res = await getUsuario(entrada , 4 ) ;   
-      
-    if ( res !== null && res.estado == 2) {       
-       const ahora           = new Date();
-       const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
-       const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
-        
-       console.log ("fecha:" + fechaAlta  + " fecha chgPass:" + res.fechaChgPass)    
-        
-       if (fechaAlta == res.fechaChgPass)  {
-            const hoy = new Date().toISOString().split('T')[0]; // formato  "2025-06-25"
-            const fechaHoraAlta = new Date(`${hoy}T${res.horaChgPass}`);
-            const diferenciaSegundos = (ahora - fechaHoraAlta) / 1000;
-            /*
-            if (diferenciaSegundos > 60) {
-               retorno = 999    
-               mensaje = "Verificacion caducada";    
-            }
-            */
-        }               
-        else {  //otra fecha 
-           retorno = 999    
-           mensaje = "Verificacion caducada"; 
-        }
-    }    
-    else {
-        retorno = 999    
-        mensaje = "No se encontradron los datos a verificar"; 
+    /* para subir*/  
+    /*  
+    if (entrada.usuario == "fj111269") {        
+        retorno = 0
+        mensaje = "Usuario Validado"
     } 
+    */
+    /*fin para dubir */  
       
     return { codRet: retorno , message: mensaje };
     
@@ -505,23 +330,6 @@ export async function validarCodigoPass(entrada) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/************************************************************************************************/
-/************************************************************************************************/
 /**/    
 /* Enviar Correo 2 Template */    
 /**/   
@@ -565,12 +373,8 @@ export async function enviarEmailLink({ email, link, time }) {
   }
 }
 
-
-
-/************************************************************************************************/
-/************************************************************************************************/
 /**/    
-/* Validaciones de Registracion */    
+/* Validaciones Registracion */    
 /**/   
 
 export function esEmailValido(email) {
@@ -590,5 +394,79 @@ export function validarPassword(password) {
   };
 }
 
+
+/**/    
+/* Recuperar Contraseña */    
+/**/   
+export async function recuperarPass(entrada) {
+  try {
+    
+    console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const res = await getUsuario(entrada , 2 ) ;   
+    console.log("usuario:" + usuario +  " correo:" + res.email) 
+    if ( res !== null) {        
+        let mensaje = `Le informamos su password registrado en BuzzconFJ: ${res.password}`         
+        await enviarEmailMsg({        
+        title: "BuzzconFJ  Recupero de Contraseña",    
+        name: res.usuario,    
+        email: res.email,
+        message : mensaje    
+      });   
+    }
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
+
+
+
+export async function reEnviarCorreo(entrada) {
+  try {
+    
+    console.log("--Re Enviar Correo--function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    const email     = entrada.email
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const dominio = process.env.NEXT_PUBLIC_DOMINIO  
+    
+    const res = await getUsuario(entrada , 2 ) ;  
+      
+    console.log("usuario:" + usuario +  " correo:" + email) 
+      
+    if ( res !== null) {  
+        console.log("re-envio correo:" , res.codVerificacion)
+        const url = `${dominio}/Access/VerifyRegistration/${usuario}/${res.codVerificacion}`   
+        console.log("url:" , url)
+        await enviarEmailLink({        
+        email: email,
+        time: new Date().toLocaleTimeString('es-AR') ,
+        link: url,
+      });
+    }
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+      
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
 
 
