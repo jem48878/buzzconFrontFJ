@@ -1,14 +1,18 @@
 import { FaBars } from "react-icons/fa";
 import { useRouter  } from 'next/navigation';
+import MyContext from '@/contexts/MyContext';  
+import { useState, useEffect , useContext } from 'react';
 
 function Encabezado() {
+   
+  const {usrLogueado, setUsrLogueado} = useContext(MyContext);     
+  console.log("Encabezado usrLogueado:" , usrLogueado)     
     
   const router = useRouter();        
     
   const volverMenu = () => {      
    router.push('/');      
-  };        
-    
+  };
     
   return (
     <>

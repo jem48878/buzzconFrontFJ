@@ -11,10 +11,13 @@ import ModalAlerta   from '@/components/ModalAlerta.js';
 import { useState, useEffect , useContext } from 'react';
 
 import { agregarInversion } from '@/utils/dataInversionesFunction'; //nuevo
-
+import MyContext from '@/contexts/MyContext';  
 
 function AgregarInversion() {
-  
+    
+   const {usrLogueado, setUsrLogueado} = useContext(MyContext);     
+   console.log("Agregar Inversion usrLogueado:" , usrLogueado)     
+    
    //variables de control     
    const [modalAbierto, setModalAbierto] = useState(false);        
    const [altaOK, setAltaOK]             = useState(false);  
