@@ -4,7 +4,7 @@ import emailjs from 'emailjs-com';
 /**/    
 /* Login.js */    
 /**/ 
-export async function loginUsuario(entrada) {
+export async function loginUsuario1(entrada) {
   try {
     
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;             
@@ -87,7 +87,7 @@ async function getUsuario(entrada , opcion) {
 /**/    
 /* Register.js */    
 /**/
-export async function crearCuenta(entrada) {
+export async function crearCuenta2(entrada) {
   try {
     
     console.log("--Register----function-----------" ,  JSON.stringify(entrada))    
@@ -589,6 +589,273 @@ export function validarPassword(password) {
     especial: /[!@#$%^&*(),.?":{}|<>+-]/.test(password),
   };
 }
+
+
+
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+/***********************************************************************************************/
+//fj-3
+
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { signInWithEmailAndPassword , signOut } from 'firebase/auth';
+import { getDatabase, ref, query, orderByChild, equalTo, get , child } from 'firebase/database';
+import { database , auth }  from '@/src/firebase';
+
+
+export async function crearCuenta(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+    
+    const opcion = 2 
+    if ( opcion == 1 ) 
+        return await crearCuenta1(entrada)
+    else {
+        return await crearCuenta2(entrada)
+    }    
+}
+
+
+export async function loginUsuario(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+    const opcion = 1 
+    if ( opcion == 1 ) 
+        return loginUsuario1(entrada)
+    else 
+        return loginUsuario2(entrada)
+}
+
+
+
+
+
+
+/**/    
+/* Register.js */    
+/**/
+export async function crearCuenta2(entrada) {
+  try {
+    
+    console.log("--Register-2---function-----------" ,  JSON.stringify(entrada))    
+    const usuario  = entrada.usuario
+    const password = entrada.password    
+    const email    = entrada.email
+    console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
+      
+    let retorno = 0
+    let mensaje = "alta OK"
+    
+    const res = await getUsuario(entrada , 2 ) ;  
+    
+    let url =""
+    
+    if ( res == null || res.estado != 2) {
+       const ahora           = new Date();
+       const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
+       const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
+       const estado          = 0  ;
+       const codVerificacion = generarIdUnico() ;
+       
+       const fechaChgPass    = ahora.toLocaleDateString('es-AR');
+       const horaChgPass     = ahora.toLocaleTimeString('es-AR'); 
+       const codVerificacionPass = "" ;
+       
+       const dominio = process.env.NEXT_PUBLIC_DOMINIO      
+        
+         
+       //1 genera url y codigo para vincualar a url propia
+     
+       const res = await fetch('/api/ApiObtenerCodigoVerificacion', {
+             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ email }),
+       });
+
+       const data = await res.json();
+       if (!data.success) throw new Error(data.error);
+       console.log("oobCode verificacion FB :" , data.oobCode)  
+   
+       //genera url 
+        
+       
+       //2 crea un usuario en la base de usuarios de firebase auth 
+       //hay que autorizar el dominio para usar actionCodeSetting y https para produccion    
+          
+       /* 
+       let url = `${dominio}/Access/VerifyRegistration/${usuario}/` 
+       
+       console.log("url para actionCodeSetting:" , url )
+       
+       const userCredential = await createUserWithEmailAndPassword(auth, email, password);       
+        
+        
+       const actionCodeSettings = {
+             url: url, // Firebase agregará ?oobCode=...
+             handleCodeInApp: false,
+        };
+       await sendEmailVerification(userCredential.user, actionCodeSettings);    
+       console.log("Url verificacion FB :" , actionCodeSettings)  
+       */
+        
+       
+        
+        
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion , fechaChgPass , horaChgPass , codVerificacionPass }; 
+       if (res == null) {
+          await addUsuario(nvoUsuario);
+       }
+       else{
+          await updateInversion(res.id, nvoUsuario);
+       }  
+       
+        
+       let userCredential = null;
+       let user = null ;    
+       
+       if (res !== null) {    
+           try {
+             userCredential = await signInWithEmailAndPassword(auth, email, password);
+             //user = userCredential.user;
+             //await signOut(auth); // lo deslogueás si no querés que siga autenticado
+             console.log("re-enviar")    
+               
+           } catch (error) {
+            
+             console.log("Re-enviar con cambio de correo");
+             userCredential = await createUserWithEmailAndPassword(auth, email, password);      
+           }  
+       }
+       else {
+          console.log("Nuevo Cliente");   
+          userCredential = await createUserWithEmailAndPassword(auth, email, password);               
+       }
+       
+       console.log("nueva opcion")           
+           
+       user = userCredential.user;    
+    
+       /*    
+       const actionCodeSettings = {
+          url: url, // Firebase agregará ?oobCode=... al final
+          handleCodeInApp: false,
+       };    
+       await sendEmailVerification(user, actionCodeSettings);
+       */
+        
+       await sendEmailVerification(user, {
+             url: url,
+             handleCodeInApp: false
+        });    
+        
+       console.log("nueva opcion fin ")        
+       
+           
+       //3 manda correo directamente desde firebase url no propia
+       //const userCredential = await createUserWithEmailAndPassword(auth, email, password);    
+       //await sendEmailVerification(userCredential.user);    
+    }    
+    else {
+        retorno = 999    
+        mensaje = "Usuario ya registrado"; 
+    }  
+             
+   console.log("Url correo verificacion cuenta:" , url)          
+   /*  sirve     
+   if (retorno === 0) {
+      await enviarEmailLink({        
+        email: email,
+        time: new Date().toLocaleTimeString('es-AR'),
+        link: url,
+      });
+    }  
+    */    
+    return { codRet: retorno , message: mensaje };    
+    
+  } catch (error) {
+     return { codRet: 999 , message: error };     
+  }
+}
+
+
+
+
+/**/    
+/* Login.js */  
+/**/ 
+export async function loginUsuario2(entrada) {
+  try {
+    
+    console.log("--login-2-----function--------------" ,  JSON.stringify(entrada))      
+      
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;             
+    
+    const usuario  = entrada.usuario
+    const password = entrada.password    
+    console.log("entorno:" + entorno + " usuario:" + usuario + "  psw:" + password)  
+      
+    let retorno = 0
+    let mensaje = "Login OK"
+    
+    /* 
+    console.log("acceso a firebase getUsuario local ");   
+    const res = await getUsuario(entrada , 2 ) ;    
+    if (res == null) {         
+        mensaje = "Los datos ingresado no son valido"; 
+        retorno = 999
+    } 
+    */         
+    
+    console.log("acceso a firebase");   
+    let res = null;  
+    let id  = null   
+    const dbRef = ref(database, 'dataUsuario');
+    const q = query(dbRef, orderByChild('usuario'), equalTo(usuario));
+    const data = await get(q);  
+    if (!data.exists()) {
+        mensaje = "Los datos ingresado no son valido"; 
+        retorno = 999
+    } 
+    else
+    {  
+      id  = Object.keys(data.val())[0]; 
+      res = Object.values(data.val())[0];
+      /*    
+      console.log("salida funcion query FB:" + JSON.stringify(data));     
+      console.log("salida funcion query FB:" + JSON.stringify(res));              
+      console.log("id:" , id) 
+      console.log("correo:" , res.email)     
+      */    
+    }
+      
+    if (retorno == 0 ) {
+       console.log("emj1")
+       try {    
+         const userCredential = await signInWithEmailAndPassword(auth, res.email, password);
+         console.log("emj2")
+         if (!userCredential.user.emailVerified) {
+             mensaje =  'Correo no verificado';
+             retorno = 999  
+         }       
+       }    
+       catch (error){           
+          mensaje = "Los datos ingresado no son valido2"; 
+          retorno = 999
+        }    
+         
+           
+    }   
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {     
+     return { codRet: 999 , message: error };
+  }
+}
+
+
+
+
 
 
 
