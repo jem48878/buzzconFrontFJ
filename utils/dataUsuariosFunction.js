@@ -607,7 +607,7 @@ import { database , auth }  from '@/src/firebase';
 export async function crearCuenta(entrada) {
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
     
-    const opcion = 2 
+    const opcion = 1 
     if ( opcion == 1 ) 
         return await crearCuenta1(entrada)
     else {
@@ -664,7 +664,7 @@ export async function crearCuenta2(entrada) {
         
          
        //1 genera url y codigo para vincualar a url propia
-     
+       /*
        const res = await fetch('/api/ApiObtenerCodigoVerificacion', {
              method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -674,7 +674,7 @@ export async function crearCuenta2(entrada) {
        const data = await res.json();
        if (!data.success) throw new Error(data.error);
        console.log("oobCode verificacion FB :" , data.oobCode)  
-   
+       */   
        //genera url 
         
        
