@@ -87,7 +87,7 @@ async function getUsuario(entrada , opcion) {
 /**/    
 /* Register.js */    
 /**/
-export async function crearCuenta2(entrada) {
+export async function crearCuenta1(entrada) {
   try {
     
     console.log("--Register----function-----------" ,  JSON.stringify(entrada))    
