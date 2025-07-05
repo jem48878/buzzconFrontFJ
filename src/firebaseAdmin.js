@@ -26,47 +26,24 @@ try {
      console.log("inicializado desde archivo json")  
   } else {
      //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}');
-     console.log("🔍 Contenido recibido en FIREBASE_SERVICE_ACCOUNT_KEY:");
-     console.log(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);  
-      
-      
-      
-      
+     //console.log("🔍 Contenido recibido en FIREBASE_SERVICE_ACCOUNT_KEY:");
+     //console.log(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);  
      //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));  
-     //console.log("inicializado desde variable de ambiente")   
+     console.log("inicializado desde variable de ambiente")   
       
-     let serviceAccountRaw = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-
-// ✅ Deserializar doblemente si es necesario
-if (serviceAccountRaw.startsWith('"')) {
-  try {
-    serviceAccountRaw = JSON.parse(serviceAccountRaw);
-  } catch (err) {
-    console.error("❌ Primera deserialización falló:", err);
-  }
-}
-
-try {
-  const serviceAccount = JSON.parse(serviceAccountRaw.replace(/\\n/g, '\n'));
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-  console.log("✅ Firebase Admin inicializado");
-} catch (err) {
-  console.error("❌ Error al parsear finalmente:", err);
-}
-  
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+     serviceAccount = {
+        type                       : process.env.FIREBASE_SERVICE_TYPE,
+        project_id                 : process.env.FIREBASE_SERVICE_PROJECT_ID,
+        private_key_id             : process.env.FIREBASE_SERVICE_PRIVATE_KEY_id,
+        private_key                : process.env.FIREBASE_SERVICE_PRIVATE_KEY?.replace(/\\n/g, '\n'), 
+        client_email               : process.env.FIREBASE_SERVICE_CLIENT_EMAIL,
+        client_id                  : process.env.FIREBASE_SERVICE_CLIENT_ID,
+        auth_uri                   : process.env.FIREBASE_SERVICE_AUTH_URI,
+        token_uri                  : process.env.FIREBASE_SERVICE_TOKEN_URI,
+        auth_provider_x509_cert_url: process.env.FIREBASE_SERVICE_AUTH_PROVIDERr_X509_CERT_URL,
+        client_x509_cert_url       : process.env.FIREBASE_SERVICE_CLIENT_X509_CERT_URL,
+        universe_domain            : process.env.FIREBASE_SERVICE_UNIVERSE_DOMAIN
+     }    
       
       
       
