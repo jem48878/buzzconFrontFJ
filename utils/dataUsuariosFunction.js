@@ -664,7 +664,7 @@ export async function crearCuenta2(entrada) {
         
          
        //1 genera url y codigo para vincualar a url propia
-       /*
+       
        const res = await fetch('/api/ApiObtenerCodigoVerificacion', {
              method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -674,7 +674,7 @@ export async function crearCuenta2(entrada) {
        const data = await res.json();
        if (!data.success) throw new Error(data.error);
        console.log("oobCode verificacion FB :" , data.oobCode)  
-       */   
+          
        //genera url 
         
        
