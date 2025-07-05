@@ -10,7 +10,7 @@ export async function POST(req) {
 
   // El url puede ser cualquiera porque no vas a usar el enlace como redirección automática
   const actionCodeSettings = {
-    url: 'https://dummyurl.com/', 
+    url: 'http://localhost:3000/', 
     handleCodeInApp: true,
   };
 
