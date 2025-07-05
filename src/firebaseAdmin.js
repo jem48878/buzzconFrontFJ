@@ -25,12 +25,12 @@ try {
      serviceAccount = require('./firebaseServiceAccount.json');
      console.log("inicializado desde archivo json")  
   } else {
-     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}');
-     console.log("inicializado desde variable de ambiente")  
-  }    
-    
-    
+     //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}');
+     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));  
+     console.log("inicializado desde variable de ambiente")       
+  } 
   console.log("✅ FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
+  console.log("🔍 FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
 } catch (e) {
   console.error("❌ Error al parsear FIREBASE_SERVICE_ACCOUNT_KEY", e);
 }
@@ -42,7 +42,7 @@ if (!admin.apps.length) {
       //storageBucket: 'databuzzconfrontnx.appspot.com',
     });
     console.log('✅ Firebase Admin inicializado');
-    console.log('Storage Bucket:', admin.storage().bucket()?.name);
+    //console.log('Storage Bucket:', admin.storage().bucket()?.name);
   } catch (err) {
     console.error('❌ Error en admin.initializeApp:', err);
   }
