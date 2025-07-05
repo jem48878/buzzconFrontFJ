@@ -607,7 +607,7 @@ import { database , auth }  from '@/src/firebase';
 export async function crearCuenta(entrada) {
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
     
-    const opcion = 2 
+    const opcion = 1 
     if ( opcion == 1 ) 
         return await crearCuenta1(entrada)
     else {
