@@ -650,6 +650,9 @@ export async function crearCuenta2(entrada) {
     
     let url =""
     
+    let userCredential = null;
+    let user = null ;    
+    
     if ( res == null || res.estado != 2) {
        const ahora           = new Date();
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
@@ -713,8 +716,7 @@ export async function crearCuenta2(entrada) {
        }  
        
         
-       let userCredential = null;
-       let user = null ;    
+       
        
        if (res !== null) {    
            try {
