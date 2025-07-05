@@ -41,8 +41,7 @@ try {
         auth_uri                   : process.env.FIREBASE_SERVICE_AUTH_URI,
         token_uri                  : process.env.FIREBASE_SERVICE_TOKEN_URI,
         auth_provider_x509_cert_url: process.env.FIREBASE_SERVICE_AUTH_PROVIDERr_X509_CERT_URL,
-        client_x509_cert_url       : process.env.FIREBASE_SERVICE_CLIENT_X509_CERT_URL,
-        universe_domain            : process.env.FIREBASE_SERVICE_UNIVERSE_DOMAIN
+        client_x509_cert_url       : process.env.FIREBASE_SERVICE_CLIENT_X509_CERT_URL,       
      }    
       
       
