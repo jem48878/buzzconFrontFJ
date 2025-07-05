@@ -666,7 +666,7 @@ export async function crearCuenta2(entrada) {
        //1 genera url y codigo para vincualar a url propia
        console.log("Nuevo Cliente");   
        userCredential = await createUserWithEmailAndPassword(auth, email, password);  
-       
+       console.log("Nuevo Cliente2");   
        const res = await fetch('/api/ApiObtenerCodigoVerificacion', {
              method: 'POST',
             headers: { 'Content-Type': 'application/json' },

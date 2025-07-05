@@ -1,11 +1,8 @@
 // app/api/ApiObtenerCodigoVerificacion/route.js
-export const runtime = 'nodejs';
+//export const runtime = 'nodejs';
 
-import { readFile, writeFile } from 'fs/promises';
 import { NextResponse } from 'next/server';
 import { admin } from '@/src/firebaseAdmin';
-
-// Inicializar Firebase Admin (una sola vez)
 
 
 export async function POST(req) {
@@ -18,26 +15,7 @@ export async function POST(req) {
   };
 
   try {
-      
-    /*   
-    const fs = require('fs');
-                                                   
-    const json = JSON.parse(fs.readFileSync('./src/firebaseServiceAccount.json', 'utf8'));
-
-    // Escapá el private_key
-    json.private_key = json.private_key.replace(/\n/g, '\\n');
-
-    // String final
-    const envVar = JSON.stringify(json);
-
-    console.log("serviceAccount:" , envVar);  
-    */      
-      
-      
-      
-      
-      
-    //console.log("admin?", admin);  
+    
     console.log("admin.auth().generateEmailVerificationLink");    
       
     const link = await admin.auth().generateEmailVerificationLink(email, actionCodeSettings);
