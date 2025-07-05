@@ -645,6 +645,7 @@ export async function crearCuenta2(entrada) {
     let retorno = 0
     let mensaje = "alta OK"
     
+    
     const res = await getUsuario(entrada , 2 ) ;  
     
     let url =""
@@ -667,13 +668,13 @@ export async function crearCuenta2(entrada) {
        console.log("Nuevo Cliente");   
        userCredential = await createUserWithEmailAndPassword(auth, email, password);  
        console.log("Nuevo Cliente2");   
-       const res = await fetch('/api/ApiObtenerCodigoVerificacion', {
+       const res2 = await fetch('/api/ApiObtenerCodigoVerificacion', {
              method: 'POST',
             headers: { 'Content-Type': 'application/json' },
                body: JSON.stringify({ email }),
        });
 
-       const data = await res.json();
+       const data = await res2.json();
        if (!data.success) throw new Error(data.error);
        console.log("oobCode verificacion FB :" , data.oobCode)  
           
