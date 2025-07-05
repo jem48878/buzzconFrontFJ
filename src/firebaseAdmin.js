@@ -32,8 +32,52 @@ try {
       
       
       
-     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));  
-     console.log("inicializado desde variable de ambiente")       
+     //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));  
+     //console.log("inicializado desde variable de ambiente")   
+      
+     let serviceAccountRaw = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+
+// ✅ Deserializar doblemente si es necesario
+if (serviceAccountRaw.startsWith('"')) {
+  try {
+    serviceAccountRaw = JSON.parse(serviceAccountRaw);
+  } catch (err) {
+    console.error("❌ Primera deserialización falló:", err);
+  }
+}
+
+try {
+  const serviceAccount = JSON.parse(serviceAccountRaw.replace(/\\n/g, '\n'));
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+  console.log("✅ Firebase Admin inicializado");
+} catch (err) {
+  console.error("❌ Error al parsear finalmente:", err);
+}
+  
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
   } 
   console.log("✅ FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
   console.log("🔍 FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
