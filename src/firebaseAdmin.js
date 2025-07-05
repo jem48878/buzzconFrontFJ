@@ -26,6 +26,12 @@ try {
      console.log("inicializado desde archivo json")  
   } else {
      //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}');
+     console.log("🔍 Contenido recibido en FIREBASE_SERVICE_ACCOUNT_KEY:");
+     console.log(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);  
+      
+      
+      
+      
      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY.replace(/\\n/g, '\n'));  
      console.log("inicializado desde variable de ambiente")       
   } 
