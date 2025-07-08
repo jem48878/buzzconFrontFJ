@@ -8,11 +8,12 @@ import { useRouter } from 'next/navigation';
 
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-
+import useSetUsrLogueado from '@/hooks/useSetUsrLogueado';  //fj-1
 
 function Login() {
     
   const {usrLogueado, setUsrLogueado} = useContext(MyContext); 
+  const guardarUsuario = useSetUsrLogueado();                   //fj-1      
     
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
@@ -36,8 +37,10 @@ function Login() {
       data = await loginUsuario(entrada) 
       
       if (data.codRet != 0 )  throw new Error (data.message)
-      
-      setUsrLogueado(usuario) 
+            
+      //setUsrLogueado(usuario)   //fj-1
+      guardarUsuario(usuario)     //fj-1     
+        
       console.log("Login usrLogueado:" , usrLogueado)    
       console.log("Login usuario:" , usuario)      
       router.push(`/`);         

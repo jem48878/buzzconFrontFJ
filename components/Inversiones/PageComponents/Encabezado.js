@@ -3,9 +3,12 @@ import { useRouter  } from 'next/navigation';
 import MyContext from '@/contexts/MyContext';  
 import { useState, useEffect , useContext } from 'react';
 
+import useUsrLogueado from '@/hooks/useUsrLogueado';  //fj-1
+
 function Encabezado() {
    
-  const {usrLogueado, setUsrLogueado} = useContext(MyContext);     
+  //const {usrLogueado, setUsrLogueado} = useContext(MyContext);       //fj-1
+  const usuario = useUsrLogueado();                                    //fj-1       
   console.log("Encabezado usrLogueado:" , usrLogueado)     
     
   const router = useRouter();        

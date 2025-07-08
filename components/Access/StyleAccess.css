@@ -1,10 +1,3 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  /*height: 100%;*/
-  font-family: Inter, sans-serif;
-  overflow: hidden; /* 🔥 evita scroll vertical y horizontal */
-}
 
 /* NAVBAR */
 .navbar {
@@ -21,14 +14,16 @@ body, html {
 
 /* MENÚ: Agranda texto y cambia cursor */
 .navbar-nav .nav-link {
-  font-size: 1.2rem !important;
+  font-size: 1.6rem !important;
   cursor: pointer !important;
+  font-weight: bold;
+  color:white;    
 }
 
 /* TÍTULO BuzzCon */
 .navbar-brand span {
-  font-size: 1.6rem !important;
-  font-weight: 600 !important;
+  font-size: 1.8rem !important;
+  font-weight: bold !important;
   margin-left: 0.5rem;
 }
 

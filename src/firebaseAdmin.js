@@ -23,7 +23,9 @@ try {
     
   if (process.env.NEXT_PUBLIC_DOMINIO === 'http://localhost:3000') {
      serviceAccount = require('./firebaseServiceAccount.json');
-     console.log("inicializado desde archivo json")  
+      
+     //console.log("inicializado desde archivo json:" , serviceAccount.private_key)  
+     //console.log("inicializado desde archivo json:" , serviceAccount.private_key?.replace(/\\n/g, '\n'))    
   } else {
      //serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || '{}');
      //console.log("🔍 Contenido recibido en FIREBASE_SERVICE_ACCOUNT_KEY:");
@@ -43,13 +45,6 @@ try {
         auth_provider_x509_cert_url: process.env.FIREBASE_SERVICE_AUTH_PROVIDERr_X509_CERT_URL,
         client_x509_cert_url       : process.env.FIREBASE_SERVICE_CLIENT_X509_CERT_URL,       
      }    
-      
-      
-      
-      
-      
-      
-      
       
       
       
