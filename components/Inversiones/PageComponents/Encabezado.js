@@ -9,7 +9,7 @@ function Encabezado() {
    
   //const {usrLogueado, setUsrLogueado} = useContext(MyContext);       //fj-1
   const usuario = useUsrLogueado();                                    //fj-1       
-  console.log("Encabezado usrLogueado:" , usrLogueado)     
+  console.log("Encabezado usrLogueado:" , usuario)     
     
   const router = useRouter();        
     
