@@ -36,7 +36,7 @@ function Register() {
   const [validando, setValidando] = useState(false);                       
   const [timeout, setTimeout] = useState(0);                
   
-  const espera  = 10
+  const espera  = 90
   
   const [countdown, setCountdown] = useState(espera);  
   const [resetId, setResetId] = useState(0);
