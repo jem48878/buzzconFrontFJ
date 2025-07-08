@@ -20,7 +20,7 @@ function MenuBody({ onRegister}) {
 
     <p className="mb-4 text-white"  style= {{ fontSize: "1.2rem" }}>
       Descubrí la forma más rápida y sencilla de crear tu próximo negocio junto a Buzzcon,
-      ofrecemos los mejores servicios relacionados a negocios, para <br />descubrir todo{" "}
+      ofrecemos los mejores servicios relacionados a negocios, para descubrir todo{" "}
       <a className="text-white text-decoration-underline"
        onClick={onRegister} 
       >
