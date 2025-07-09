@@ -1,4 +1,6 @@
 // app/api/ApiSubirImagenSupaBase/route.js
+//guardar las imagenes en la nube para vercel 
+
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 

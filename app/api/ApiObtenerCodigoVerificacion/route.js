@@ -1,5 +1,9 @@
+
+
 // app/api/ApiObtenerCodigoVerificacion/route.js
-//export const runtime = 'nodejs';
+//para agregar firebase Authentication ejecutar desde el server 
+//obtener el codigo oodCode para integrar en la url de autenticacion propia 
+
 
 import { NextResponse } from 'next/server';
 import { admin } from '@/src/firebaseAdmin';

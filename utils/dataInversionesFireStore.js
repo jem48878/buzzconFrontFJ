@@ -1,3 +1,9 @@
+//- Lado Cliente -
+//leer y grabar el json en la nube firebase  firestore - 
+//Manejo de json de dataInversiones 
+//manejo plano , se lee todo el json y se trabaja con javascript desde dataUsuariosFunction
+//escalable a manejo eficiente de busquedas con query etc....
+
 
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "@/src/firebase";

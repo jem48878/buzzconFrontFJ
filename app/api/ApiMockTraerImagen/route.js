@@ -1,3 +1,5 @@
+
+//no se usa era para traer imagen guardado en firebase realtime no como url
 //import DataInversiones from '@/data/DataInversiones';
 import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
 

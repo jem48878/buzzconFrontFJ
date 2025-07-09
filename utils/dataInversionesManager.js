@@ -1,3 +1,10 @@
+//solo ejecucion local 
+//manejo del json en data/ 
+//no sirve para vercel no se puede grabar en archivos del proyecto
+//Manejo de json de dataInversiones en txt 
+//manejo plano , se lee todo el json y se trabaja con javascript desde dataInversionesFunction
+//se reemplaza por json en firebase (realtime databe o fireStore)
+
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 

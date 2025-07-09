@@ -1,20 +1,7 @@
-// src/firebaseAdmin.js
-/*
-import admin from 'firebase-admin';
-import serviceAccount from './firebaseServiceAccount.json';
+//manejos de firebase desde el Server 
+//para escalar a usar firebase Authentication
+//para modo local agregar en src/firebaseServiceAccount.json, se debe borrar para subir a vercel porque da //error al subir a git por exponer claves privadas
 
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
-
-const db = admin.firestore();
-export { db };
-*/
-
-
-// src/firebaseAdmin.js
 import admin from "firebase-admin";
 
 let serviceAccount = {};
@@ -50,10 +37,10 @@ try {
       
       
   } 
-  console.log("✅ FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
-  console.log("🔍 FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
+  console.log("FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
+  console.log("FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
 } catch (e) {
-  console.error("❌ Error al parsear FIREBASE_SERVICE_ACCOUNT_KEY", e);
+  console.error("Error al parsear FIREBASE_SERVICE_ACCOUNT_KEY", e);
 }
 
 if (!admin.apps.length) {
@@ -62,10 +49,10 @@ if (!admin.apps.length) {
       credential: admin.credential.cert(serviceAccount),
       //storageBucket: 'databuzzconfrontnx.appspot.com',
     });
-    console.log('✅ Firebase Admin inicializado');
+    console.log('Firebase Admin inicializado');
     //console.log('Storage Bucket:', admin.storage().bucket()?.name);
   } catch (err) {
-    console.error('❌ Error en admin.initializeApp:', err);
+    console.error('Error en admin.initializeApp:', err);
   }
 }
 
@@ -76,7 +63,7 @@ console.log('Firebase Admin inicializado');
 
 const db = admin.firestore();
 
-//const bucket = admin.storage().bucket();
+//const bucket = admin.storage().bucket();  //no se usa por ser pago , se usa SupraBase gratis
 
             
 export {admin , db};

@@ -1,5 +1,11 @@
-const FIREBASE_USUARIOS_URL = 'https://databuzzconfrontnx-default-rtdb.firebaseio.com/dataUsuario.json';
+//lado cliente
+//Manejo de json de dataUsuarios firebase Realtime Databse 
+//manejo plano , se lee todo el json y se trabaja con javascript desde dataUsuariosFunction
+//escalable reemplazo de lectura plana por queries etc... 
 
+
+//direccion de json en firebase
+const FIREBASE_USUARIOS_URL = 'https://databuzzconfrontnx-default-rtdb.firebaseio.com/dataUsuario.json';
 
 // Leer todas los usuarios desde Firebase
 export async function loadUsuario() {

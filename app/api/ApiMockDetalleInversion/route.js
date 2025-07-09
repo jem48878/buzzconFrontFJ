@@ -1,8 +1,11 @@
 
-//import DataInversiones from '@/data/DataInversiones';
+//archivo local en /Data no se puede usar desde vercell
 //import { loadInversiones, addInversion } from '@/utils/dataInversionesManager';
+
+//firebase json en la nube opcion FireStore desde el server 
 //import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStoreServer';
 
+//firebase realtime database desde el cliente y servidor
 import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
 

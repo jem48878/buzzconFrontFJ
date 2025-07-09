@@ -1,4 +1,6 @@
 
+//manejos de firebase desde el cliente
+
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 

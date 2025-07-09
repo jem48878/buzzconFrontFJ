@@ -1,3 +1,6 @@
+
+//local grabar en /Public no sirve desde vercel
+
 import path from 'path';
 import fs from 'fs/promises';
 import { NextResponse } from 'next/server';

@@ -1,4 +1,11 @@
+
+//desde el cliente
+//funciones de DataUsuarios desde firebase realtime database
+//manejo plano , se lee todo el json y se trabaja con javascript 
+//escalable reemplazo de lectura plana puntulaes / queries etc... 
+
 import { addUsuario , loadUsuario , updateInversion } from '@/utils/dataUsuariosFireBase';
+
 import emailjs from 'emailjs-com';
     
 /**/    

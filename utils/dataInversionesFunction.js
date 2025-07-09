@@ -1,7 +1,14 @@
+//lado cliente
+//funciones de DataInversiones desde firebase realtime database / firestore
+//manejo plano , se lee todo el json y se trabaja con javascript 
+//obs: -firestore mas potente a nivel de consultas se puede usar where etc...-
+//escalable reemplazo de lectura plana por queries etc... 
+
+//import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStore';
 
 import { loadInversiones, addInversion } from '@/utils/dataInversionesFireBase';
 
-//import { loadInversiones, addInversion } from '@/utils/dataInversionesFireStore';
+
 
 
 /**/    
