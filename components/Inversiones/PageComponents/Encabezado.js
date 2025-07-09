@@ -14,7 +14,8 @@ function Encabezado() {
   const router = useRouter();        
     
   const volverMenu = () => {      
-   router.push('/');      
+   //router.push('/');      
+   window.location.href = '/'          
   };
     
   return (

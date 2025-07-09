@@ -11,9 +11,12 @@ import MenuUser from '@/components/Access/MenuUser';
 import MenuBody from '@/components/Access/MenuBody';
 
 import { useRouter  } from 'next/navigation';
+import useSetUsrLogueado from '@/hooks/useSetUsrLogueado';          //fj-1
+
 
 function MenuPage() {
 
+ const guardarUsuario = useSetUsrLogueado();                        //fj-1       
  const {usrLogueado, setUsrLogueado} = useContext(MyContext); 
     
  const [mensaje, setMensaje] = useState(null);           
@@ -101,7 +104,8 @@ console.log("Menu usrLogueado:" , usrLogueado)
                 onLogout={() => {
                   setMenuVisible(false);
                   setMensaje("");          
-                  setUsrLogueado(null); // o lo que uses
+                  setUsrLogueado(null); 
+                  guardarUsuario(null)   //fj-1                
                 }}
                />
               </div>
