@@ -12,12 +12,14 @@ import MenuBody from '@/components/Access/MenuBody';
 
 import { useRouter  } from 'next/navigation';
 import useSetUsrLogueado from '@/hooks/useSetUsrLogueado';          //fj-1
+import useUsrLogueado from '@/hooks/useUsrLogueado';                //fj-1-1
 
 
 function MenuPage() {
 
  const guardarUsuario = useSetUsrLogueado();                        //fj-1       
  const {usrLogueado, setUsrLogueado} = useContext(MyContext); 
+ const usuario = useUsrLogueado();                                   //fj-1-1
     
  const [mensaje, setMensaje] = useState(null);           
 
