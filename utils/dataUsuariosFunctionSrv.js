@@ -88,6 +88,7 @@ export async function crearCuenta2(entrada) {
     let userCredential = null;
     let user = null ;    
     
+    console.log('Server Salida getUsuarioRT:' , JSON.stringify(res));   
     if ( res == null || res.estado != 2) {
        const ahora           = new Date();
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
@@ -102,7 +103,7 @@ export async function crearCuenta2(entrada) {
        const dominio = process.env.NEXT_PUBLIC_DOMINIO      
                
        let emailAuth = `${usuario}@buzzcon.com` 
-       
+       console.log("emj10")
        if (res !== null) {    
            try {             
                   
@@ -139,7 +140,7 @@ export async function crearCuenta2(entrada) {
        */        
        //genera url 
            
-    
+       console.log("emj20")
       
        const actionCodeSettings = {
           url: `${dominio}/Access/VerifyRegistration/${usuario}`,
