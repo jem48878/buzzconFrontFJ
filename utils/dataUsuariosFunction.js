@@ -7,7 +7,9 @@
 import { addUsuario , loadUsuario , updateInversion } from '@/utils/dataUsuariosFireBase';
 
 import emailjs from 'emailjs-com';
-    
+ 
+
+
 /**/    
 /* Login.js */    
 /**/ 
@@ -138,14 +140,16 @@ export async function crearCuenta(entrada) {
     
     
    console.log("Url correo verificacion cuenta:" , url)          
-   
+   /*   
    if (retorno === 0) {
+      
       await enviarEmailLink({        
         email: email,
         time: new Date().toLocaleTimeString('es-AR'),
         link: url,
-      });
+      });     
     }  
+    */
    
     return { codRet: retorno , message: mensaje };    
     
@@ -234,13 +238,13 @@ export async function reEnviarCorreo(entrada) {
         console.log("re-envio correo:" , res.codVerificacion)
         const url = `${dominio}/Access/VerifyRegistration/${usuario}/${res.codVerificacion}`   
         console.log("correo verificaicon re-envio url:" , url)
-          
+        /*  
         await enviarEmailLink({        
            email: email,
            time: new Date().toLocaleTimeString('es-AR') ,
            link: url,
         });
-        
+        */
     }
     else {
         retorno = 999;
@@ -362,12 +366,13 @@ export async function recuperarPass(entrada) {
         const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
         console.log("Url cambio pass correo:" , url)
         /*  para correo con url cambiar contraseña */
+        /*
         await enviarEmailLink({        
           email: res.email,
           time: new Date().toLocaleTimeString('es-AR'),
           link: url,
         });
-            
+        */    
         
         
     }
@@ -557,6 +562,86 @@ export function validarPassword(password) {
     especial: /[!@#$%^&*(),.?":{}|<>+-]/.test(password),
   };
 }
+
+
+
+
+
+
+/***********************************************************************************************/
+/***********************************************************************************************/
+/***********************************************************************************************/
+//fj-3 Para usar desde Vercel integrando con Firebase Authenticaion 
+
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { signInWithEmailAndPassword , signOut } from 'firebase/auth';
+import { getDatabase, ref, set , push , update , query, orderByChild, equalTo, get , child } from 'firebase/database';
+import { database , auth }  from '@/src/firebase';
+
+import * as srvFn from '@/utils/dataUsuariosFunctionSrvGit';
+
+
+export async function loginUsuario(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+     
+    if ( entorno == 'local' ) 
+        return await loginUsuario1(entrada)
+    else 
+        return await loginUsuario2(entrada)
+}
+
+
+
+
+
+/**/    
+/* Login.js */  
+/**/ 
+export async function loginUsuario2(entrada) {
+  try {
+    
+    console.log("--login-2-----function--------------" ,  JSON.stringify(entrada))      
+      
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;             
+    
+    const usuario  = entrada.usuario
+    const password = entrada.password    
+    console.log("entorno:" + entorno + " usuario:" + usuario + "  psw:" + password)  
+      
+    let retorno = 0
+    let mensaje = "Login OK"
+    
+    const res = await srvFn.getUsuarioRT(entrada , 2)  
+      
+    if (res == null) {
+        mensaje = "Los datos ingresado no son valido"; 
+        retorno = 999
+    } 
+      
+    if (retorno == 0 ) {
+       try {    
+         let emailAuth = `${usuario}@buzzcon.com`    
+         const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
+         if (!userCredential.user.emailVerified) {
+             mensaje =  'Usuario no verificado';
+             retorno = 999  
+         }       
+       }    
+       catch (error){           
+          console.log("error firebase Auth:" , error.message)   
+          mensaje = "Los datos ingresado no son valido2" ;  
+          retorno = 999
+        }    
+
+    }   
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {     
+     return { codRet: 999 , message: error };
+  }
+}
+
 
 
 

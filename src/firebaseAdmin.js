@@ -33,9 +33,6 @@ try {
         client_x509_cert_url       : process.env.FIREBASE_SERVICE_CLIENT_X509_CERT_URL,       
      }    
       
-      
-      
-      
   } 
   console.log("FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
   console.log("FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
@@ -47,6 +44,7 @@ if (!admin.apps.length) {
   try {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
+      databaseURL: process.env.FIREBASE_DATABASE_URL,              //fj-3 
       //storageBucket: 'databuzzconfrontnx.appspot.com',
     });
     console.log('Firebase Admin inicializado');
@@ -60,11 +58,17 @@ console.log('Firebase Admin inicializado');
 //console.log('Storage Bucket:', admin.storage().bucket()?.name);
 
 
+//const bucket = admin.storage().bucket();   //no se usa por ser pago , se usa SupraBase gratis
 
-const db = admin.firestore();
+const fsdb     = admin.firestore();          //firestore   fj-3    
 
-//const bucket = admin.storage().bucket();  //no se usa por ser pago , se usa SupraBase gratis
+const database = admin.database();           //realtime    fj-3
 
-            
-export {admin , db};
+const auth     = admin.auth();               //Auth        fj-3
+
+
+export {admin , fsdb , database , auth};
+
+        
+
 
