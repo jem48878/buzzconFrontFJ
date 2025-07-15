@@ -103,6 +103,7 @@ export async function crearCuenta2(entrada) {
        const dominio = process.env.NEXT_PUBLIC_DOMINIO      
                
        let emailAuth = `${usuario}@buzzcon.com` 
+       
        console.log("emj10")
        if (res !== null) {    
            try {             
@@ -112,16 +113,25 @@ export async function crearCuenta2(entrada) {
                
            } catch (error) {             
              retorno = 999
-             mensaje = "Error al procesar alta" 
+             mensaje = "Error al procesar la validacion de usuario existente no validado" 
+             return { codRet: retorno, message: mensaje };   
            }  
        }
        else {
-          console.log("Nuevo Cliente");   
-          const userCredential = await auth.createUser({
+         try {   
+            console.log("Nuevo Cliente");   
+            const userCredential = await auth.createUser({
                                  email,
                                  password,
                                  displayName: usuario
                             }); 
+          }
+          catch (error) {
+            console.error("Error al crear usuario:", error);
+            retorno = 999;
+            mensaje = "Error al crear usuario";
+            return { codRet: retorno, message: mensaje }; // ⛔ cortar ejecución aquí si falla
+          } 
        }   
         
        //1 genera url y codigo para vincualar a url propia //
@@ -146,12 +156,23 @@ export async function crearCuenta2(entrada) {
           url: `${dominio}/Access/VerifyRegistration/${usuario}`,
           handleCodeInApp: true,
        };
-
-       console.log("admin.auth().generateEmailVerificationLink");        
-       const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
-       console.log("sali admin.auth().generateEmailVerificationLink");            
-       codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
-       console.log("oobCode verificacion FB :" , codVerificacion)  
+    
+       try {    
+         console.log("admin.auth().generateEmailVerificationLink");        
+         const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
+         console.log("sali admin.auth().generateEmailVerificationLink");            
+         codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
+         console.log("oobCode verificacion FB :" , codVerificacion)  
+       }
+       catch (error) {
+         console.error("Error al generar verification link:", error);
+         retorno = 999;
+         mensaje = "Error al generar link de verificación";
+         return { codRet: retorno, message: mensaje };
+       }    
+        
+        
+        
        
        url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
        const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion , fechaChgPass , horaChgPass , codVerificacionPass }; 
