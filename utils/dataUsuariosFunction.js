@@ -95,7 +95,7 @@ async function getUsuario(entrada , opcion) {
 /**/    
 /* Register.js */    
 /**/
-export async function crearCuenta(entrada) {
+export async function crearCuenta1(entrada) {
   try {
     
     console.log("--Register----function-----------" ,  JSON.stringify(entrada))    
@@ -591,6 +591,18 @@ export async function loginUsuario(entrada) {
 }
 
 
+export async function crearCuenta(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await crearCuenta1(entrada)
+    else {
+        return await srvFn.crearCuenta2(entrada)
+    }    
+}
+
+
+
 
 
 
@@ -641,6 +653,9 @@ export async function loginUsuario2(entrada) {
      return { codRet: 999 , message: error };
   }
 }
+
+
+
 
 
 

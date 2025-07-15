@@ -6,8 +6,9 @@ import { ref, set , push , update , get , query, orderByChild, equalTo, child } 
 import { database , auth }  from '@/src/firebaseAdmin';
 
 
-/*///////////////////////////////////////////////////////////////////*/
-
+/*------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------*/
 
 export async function getUsuarioRT(entrada , opcion) {  
     
@@ -32,9 +33,156 @@ export async function getUsuarioRT(entrada , opcion) {
     const res = Object.values(data.val())[0];      
     data = {id , ...res};  
     
-    console.log('Server Salida getUsuarioRT:' , JSON.stringify(data));
-    
+    //console.log('Server Salida getUsuarioRT:' , JSON.stringify(data));
     return data;
+}
+
+
+
+
+async function addUsuarioRT(entrada) {  
+   console.log("-Server --addtUsuarioRT----")      
+   console.log('entrada:' , JSON.stringify(entrada) ) 
+   const owner = process.env.NEXT_PUBLIC_OWNER
+   const jsonData = owner + 'dataUsuario'  
+   const nuevaRef = database.ref(jsonData).push(); 
+   await nuevaRef.set(entrada); 
+}    
+    
+
+async function updateUsuarioRT(idUsuario, entrada) {  
+   console.log("- Server --updateUsuarioRT----")      
+   console.log('entrada:' , JSON.stringify(entrada) ) 
+   const owner = process.env.NEXT_PUBLIC_OWNER
+   let jsonData = owner + 'dataUsuario'     
+   jsonData     = `${jsonData}/${idUsuario}`;
+   console.log("jsonData" , jsonData)  
+   await database.ref(jsonData).update(entrada);    
+}
+
+
+/*------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------*/
+
+
+/**/    
+/* Register.js */    
+/**/
+export async function crearCuenta2(entrada) {
+  try {
+    
+    console.log("--Register-2---function-----------" ,  JSON.stringify(entrada))    
+    const usuario  = entrada.usuario
+    const password = entrada.password    
+    const email    = entrada.email
+    console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
+      
+    let retorno = 0
+    let mensaje = "alta OK"
+            
+    const res = await getUsuarioRT(entrada , 2)    
+      
+    let url =""
+    
+    let userCredential = null;
+    let user = null ;    
+    
+    if ( res == null || res.estado != 2) {
+       const ahora           = new Date();
+       const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
+       const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
+       const estado          = 0  ;
+       let  codVerificacion  = generarIdUnico() ;
+       
+       const fechaChgPass    = ahora.toLocaleDateString('es-AR');
+       const horaChgPass     = ahora.toLocaleTimeString('es-AR'); 
+       const codVerificacionPass = "" ;
+       
+       const dominio = process.env.NEXT_PUBLIC_DOMINIO      
+               
+       let emailAuth = `${usuario}@buzzcon.com` 
+       
+       if (res !== null) {    
+           try {             
+                  
+            await auth.getUserByEmail(emailAuth); 
+            console.log("Usuario ya registrado pero no validado")    
+               
+           } catch (error) {             
+             retorno = 999
+             mensaje = "Error al procesar alta" 
+           }  
+       }
+       else {
+          console.log("Nuevo Cliente");   
+          const userCredential = await auth.createUser({
+                                 email,
+                                 password,
+                                 displayName: usuario
+                            }); 
+       }   
+        
+       //1 genera url y codigo para vincualar a url propia //
+       /*
+       const resApi = await fetch('/api/ApiObtenerCodigoVerificacion', {
+             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ emailAuth }),
+       });
+
+       const dataApi = await resApi.json();
+       if (!dataApi.success) throw new Error(dataApi.error);
+       
+       console.log("oobCode verificacion FB :" , dataApi.oobCode)  
+       codVerificacion = dataApi.oobCode
+       */        
+       //genera url 
+           
+    
+      
+       const actionCodeSettings = {
+          url: `${dominio}/Access/VerifyRegistration/${usuario}`,
+          handleCodeInApp: true,
+       };
+
+       console.log("admin.auth().generateEmailVerificationLink");        
+       const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
+       console.log("sali admin.auth().generateEmailVerificationLink");            
+       codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
+       console.log("oobCode verificacion FB :" , codVerificacion)  
+       
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion , fechaChgPass , horaChgPass , codVerificacionPass }; 
+        
+       if (res == null) {       
+          await addUsuarioRT(nvoUsuario)   
+       }
+       else{
+          await updateUsuarioRT(res.id , nvoUsuario);
+       }  
+       
+    }    
+    else {
+        retorno = 999    
+        mensaje = "Usuario ya registrado"; 
+    }  
+             
+   console.log("Url correo verificacion cuenta:" , url)          
+   /*  sirve     
+   if (retorno === 0) {
+      await enviarEmailLink({        
+        email: email,
+        time: new Date().toLocaleTimeString('es-AR'),
+        link: url,
+      });
+    }  
+    */    
+    return { codRet: retorno , message: mensaje };    
+    
+  } catch (error) {
+     return { codRet: 999 , message: error };     
+  }
 }
 
 
