@@ -13,7 +13,7 @@ import emailjs from 'emailjs-com';
 /**/    
 /* Login.js */    
 /**/ 
-export async function loginUsuario(entrada) {
+export async function loginUsuario1(entrada) {
   try {
     
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;             
