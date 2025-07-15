@@ -107,7 +107,7 @@ export async function crearCuenta2(entrada) {
        console.log("emj10")
        if (res !== null) {    
            try {             
-                  
+            console.log("emj11")          
             await auth.getUserByEmail(emailAuth); 
             console.log("Usuario ya registrado pero no validado")    
                
@@ -121,8 +121,8 @@ export async function crearCuenta2(entrada) {
          try {   
             console.log("Nuevo Cliente");   
             const userCredential = await auth.createUser({
-                                 email,
-                                 password,
+                                 email: emailAuth,
+                                 password: password,
                                  displayName: usuario
                             }); 
           }
