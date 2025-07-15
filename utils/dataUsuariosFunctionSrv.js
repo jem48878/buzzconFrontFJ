@@ -90,11 +90,12 @@ export async function crearCuenta2(entrada) {
     
     console.log('Server Salida getUsuarioRT:' , JSON.stringify(res));   
     if ( res == null || res.estado != 2) {
+        console.log("emj09")    
        const ahora           = new Date();
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        const estado          = 0  ;
-       let  codVerificacion  = generarIdUnico() ;
+       let  codVerificacion  = "" ;
        
        const fechaChgPass    = ahora.toLocaleDateString('es-AR');
        const horaChgPass     = ahora.toLocaleTimeString('es-AR'); 
