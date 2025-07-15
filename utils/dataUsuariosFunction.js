@@ -578,7 +578,7 @@ import { signInWithEmailAndPassword , signOut } from 'firebase/auth';
 import { getDatabase, ref, set , push , update , query, orderByChild, equalTo, get , child } from 'firebase/database';
 import { database , auth }  from '@/src/firebase';
 
-import * as srvFn from '@/utils/dataUsuariosFunctionSrvGit';
+import * as srvFn from '@/utils/dataUsuariosFunctionSrv';
 
 
 export async function loginUsuario(entrada) {
