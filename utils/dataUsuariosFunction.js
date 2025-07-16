@@ -698,6 +698,7 @@ export async function validarNvaCuenta2(entrada) {
     
     /* se valida a nivel base propia */
     const res = await srvFn.validarNvaCuenta2(entrada)    
+                      
     let retorno = res.codRet
     let mensaje = res.message  
     

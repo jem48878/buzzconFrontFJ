@@ -88,9 +88,10 @@ function Register() {
     try {  
       let data = null ;    
       
-      const entrada = {usuario , password , email };   
+      const entrada = {usuario , password , email };  
+      console.log("emj1 validarEstado")    
       data = await validarNvaCuenta(entrada) 
-      
+      console.log("emj2 validarEstado")    
       if (data.codRet != 0 )  throw new Error (data.message)        
       
       setUsrLogueado(usuario)      
