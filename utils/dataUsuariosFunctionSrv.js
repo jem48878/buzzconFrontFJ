@@ -193,7 +193,7 @@ export async function crearCuenta2(entrada) {
           await addUsuarioRT(nvoUsuario)   
        }
        else{
-          await updateUsuarioRT(res.id , nvoUsuario);
+          await updateUsuarioRT(res.id , null, nvoUsuario);
        }  
        
     }    
