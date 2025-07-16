@@ -41,7 +41,7 @@ export async function getUsuarioRT(entrada , opcion) {
 
 
 
-async function addUsuarioRT(entrada) {  
+export async function addUsuarioRT(entrada) {  
    console.log("-Server --addtUsuarioRT----")      
    console.log('entrada:' , JSON.stringify(entrada) ) 
    const owner = process.env.NEXT_PUBLIC_OWNER
@@ -265,22 +265,7 @@ export async function validarCodigo2(entrada) {
         retorno = 999    
         mensaje = "No se encontradron los datos a verificar"; 
     } 
-     
-    /*  
-    if (retorno == 0 )  {
-        try {
-          console.log("auth.applyActionCode")    
-          await auth.applyActionCode(codVerificacion)
-          console.log("updateUsuarioRT")        
-          await updateUsuarioRT(res.id, {estado: 2,})    
-            
-        } catch (error) {
-          retorno = 999
-          mensaje = error.message    
-        }
-    }
-    */  
-    
+        
     console.log("retorno:" + retorno + " mensaje:" + mensaje)  
       
     return { codRet: retorno , message: mensaje };
