@@ -218,7 +218,7 @@ export async function validarNvaCuenta1(entrada) {
 /* Re-enviar Correo */ 
 /* Register.js
 /**/ 
-export async function reEnviarCorreo(entrada) {
+export async function reEnviarCorreo1(entrada) {
   try {
     
     console.log("--Re Enviar Correo--function-----------" ,  JSON.stringify(entrada))    
@@ -724,6 +724,8 @@ export async function validarNvaCuenta2(entrada) {
      
   }
 }
+
+
 
 
 

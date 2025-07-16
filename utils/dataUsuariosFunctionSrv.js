@@ -78,7 +78,7 @@ export async function updateUsuarioRT(idUsuario , usuario , entrada) {
 export async function crearCuenta2(entrada) {
   try {
     
-    console.log("--Register-2---function-----------" ,  JSON.stringify(entrada))    
+    console.log("--Server Register-2---function-----------" ,  JSON.stringify(entrada))    
     const usuario  = entrada.usuario
     const password = entrada.password    
     const email    = entrada.email
@@ -252,6 +252,116 @@ export async function validarNvaCuenta2(entrada) {
      
   }
 }
+
+
+
+
+/**/ 
+/* Re-enviar Correo */ 
+/* Register.js
+/**/ 
+export async function reEnviarCorreo2(entrada) {
+  try {
+    
+    console.log("--Server ReEnviarCorreo--function2-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    const email     = entrada.email
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const dominio = process.env.NEXT_PUBLIC_DOMINIO  
+    
+    const res = await getUsuarioRT(entrada , 2 ) ;  
+      
+    console.log("usuario:" + usuario +  " correo:" + email) 
+               
+    let emailAuth = `${usuario}@buzzcon.com` 
+        
+    if (res !== null) {    
+       try {                              
+          await auth.getUserByEmail(emailAuth); 
+          console.log("Usuario ya registrado no validado")    
+           
+          const actionCodeSettings = {
+              url: `${dominio}/Access/VerifyRegistration/${usuario}`,
+              handleCodeInApp: true,
+          };
+    
+         //console.log("admin.auth().generateEmailVerificationLink");        
+         const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
+         //console.log("sali admin.auth().generateEmailVerificationLink");            
+         codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
+         console.log("oobCode verificacion FB :" , codVerificacion)  
+           
+       } catch (error) {
+         console.error("Error en la generacion del link de re-envio de correo :", error);
+         retorno = 999;
+         mensaje = "Error al generar el  link de re-envio de correo";
+         return { codRet: retorno, message: mensaje };
+       }    
+        
+       
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       
+       const ahora           = new Date();
+       const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
+       const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
+       
+       const nvoLink = {fechaAlta , horaAlta , codVerificacion }; 
+       await updateUsuarioRT(res.id , null, nvoLink);
+    
+             
+       console.log("Url correo verificacion cuenta:" , url)
+       /*  sirve     
+       if (retorno === 0) {
+           await enviarEmailLink({        
+             email: email,
+             time: new Date().toLocaleTimeString('es-AR'),
+             link: url,
+          });
+       }  
+       */              
+          
+    }    
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+      
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error.message };
+     
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
