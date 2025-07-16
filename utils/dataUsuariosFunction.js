@@ -689,7 +689,7 @@ export async function loginUsuario2(entrada) {
 export async function validarNvaCuenta2(entrada) {
   try {
     
-    console.log("--validar Nueva Cuenta----function-----------" ,  JSON.stringify(entrada))    
+    console.log("--validar Nueva Cuenta-2---function-----------" ,  JSON.stringify(entrada))    
     const usuario   = entrada.usuario
     const password  = entrada.password    
     const email     = entrada.email
