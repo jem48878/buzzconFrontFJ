@@ -1,5 +1,6 @@
 "use server"
 
+
 import { ref, set , push , update , get , query, orderByChild, equalTo, child } from           
 'firebase-admin/database';
 
@@ -90,7 +91,7 @@ export async function crearCuenta2(entrada) {
     
     console.log('Server Salida getUsuarioRT:' , JSON.stringify(res));   
     if ( res == null || res.estado != 2) {
-        console.log("emj09")    
+         
        const ahora           = new Date();
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
@@ -105,7 +106,7 @@ export async function crearCuenta2(entrada) {
                
        let emailAuth = `${usuario}@buzzcon.com` 
        
-       console.log("emj10")
+        
        if (res !== null) {    
            try {             
             console.log("emj11")          
@@ -114,7 +115,7 @@ export async function crearCuenta2(entrada) {
                
            } catch (error) {             
              retorno = 999
-             mensaje = "Error al procesar la validacion de usuario existente no validado" 
+             mensaje = "Error al procesar la validacion de usuario existente" 
              return { codRet: retorno, message: mensaje };   
            }  
        }
@@ -131,7 +132,7 @@ export async function crearCuenta2(entrada) {
             console.error("Error al crear usuario:", error);
             retorno = 999;
             mensaje = "Error al crear usuario";
-            return { codRet: retorno, message: mensaje }; // ⛔ cortar ejecución aquí si falla
+            return { codRet: retorno, message: mensaje }; 
           } 
        }   
         
@@ -207,5 +208,91 @@ export async function crearCuenta2(entrada) {
      return { codRet: 999 , message: error };     
   }
 }
+
+
+
+
+
+
+
+
+/**/   
+/* VerifyRegistratatio.js
+/* Validar la url de registracion */    
+/**/   
+export async function validarCodigo2(entrada) {
+  try {
+    
+    console.log("--validar Codigo----function-----------" ,  JSON.stringify(entrada))    
+    const usuario          = entrada.user
+    const codVerificacion  = entrada.code        
+    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
+    
+    let retorno = 0
+    let mensaje = "Usuario validado";
+    
+    entrada = {usuario , codVerificacion}; 
+    const res = await getUsuarioRT(entrada , 2 ) ;   
+      
+    if ( res !== null) {
+       if (res.estado == 0 ) {
+           const ahora           = new Date();
+           const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
+           const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
+           
+           if (fechaAlta == res.fechaAlta)  {
+               const hoy = new Date().toISOString().split('T')[0]; // "2025-06-25"
+               const fechaHoraAlta = new Date(`${hoy}T${res.horaAlta}`);
+               const diferenciaSegundos = (ahora - fechaHoraAlta) / 1000;
+               /*
+               if (diferenciaSegundos > 60) {
+                  retorno = 999    
+                  mensaje = "Verificacion caducada";    
+               }
+               */
+           }               
+           else {
+               retorno = 999    
+               mensaje = "Verificacion caducada"; 
+           }
+       }                    
+       else {
+         retorno = 0    
+         mensaje = "Usuario validado";    
+       } 
+    }    
+    else {
+        retorno = 999    
+        mensaje = "No se encontradron los datos a verificar"; 
+    } 
+     
+      
+    if (retorno == 0 )  {
+        try {
+          console.log("auth.applyActionCode")    
+          await auth.applyActionCode(codVerificacion)
+          console.log("updateUsuarioRT")        
+          await updateUsuarioRT(res.id, {estado: 2,})    
+            
+        } catch (error) {
+          retonro = 999
+          mensaje = error.message    
+        }
+    }
+      
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+     return { codRet: 999 , message: error.message };
+  }
+}
+
+
+
+
+
+
+
 
 

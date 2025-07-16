@@ -4,7 +4,7 @@
 //manejo plano , se lee todo el json y se trabaja con javascript 
 //escalable reemplazo de lectura plana puntulaes / queries etc... 
 
-import { addUsuario , loadUsuario , updateInversion } from '@/utils/dataUsuariosFireBase';
+import { addUsuario , loadUsuario , updateUsuario } from '@/utils/dataUsuariosFireBase';
 
 import emailjs from 'emailjs-com';
  
@@ -130,7 +130,7 @@ export async function crearCuenta1(entrada) {
           await addUsuario(nvoUsuario);
        }
        else{
-          await updateInversion(res.id, nvoUsuario);
+          await updateUsuario(res.id, nvoUsuario);
        }    
     }    
     else {
@@ -264,7 +264,7 @@ export async function reEnviarCorreo(entrada) {
 /* VerifyRegistratatio.js
 /* Validar la url de registracion */    
 /**/   
-export async function validarCodigo(entrada) {
+export async function validarCodigo1(entrada) {
   try {
     
     console.log("--validar Codigo----function-----------" ,  JSON.stringify(entrada))    
@@ -295,7 +295,7 @@ export async function validarCodigo(entrada) {
                }
                else {
                */
-                   await updateInversion(res.id, {                     
+                   await updateUsuario(res.id, {                     
                    estado: 2,
                    });
                //}
@@ -361,7 +361,7 @@ export async function recuperarPass(entrada) {
         const horaChgPass         = ahora.toLocaleTimeString('es-AR'); 
         const codVerificacionPass = generarIdUnico() ;
         const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
-        await updateInversion(res.id, cambioPass);
+        await updateUsuario(res.id, cambioPass);
                 
         const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
         console.log("Url cambio pass correo:" , url)
@@ -410,7 +410,7 @@ export async function cambiarContraseña(entrada) {
         console.log("usuario:" + usuario +  " pass:" + res.password) 
    
         const nvaPass = {password}
-        await updateInversion(res.id, nvaPass);
+        await updateUsuario(res.id, nvaPass);
         console.log("Ok modificacion contraseña")
     }
     else {
@@ -600,6 +600,19 @@ export async function crearCuenta(entrada) {
         return await srvFn.crearCuenta2(entrada)
     }    
 }
+
+
+
+export async function validarCodigo(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await validarCodigo1(entrada)
+    else {
+        return await srvFn.validarCodigo2(entrada)
+    }    
+}
+
 
 
 

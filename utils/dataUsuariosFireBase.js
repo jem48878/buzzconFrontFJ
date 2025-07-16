@@ -41,7 +41,7 @@ export async function addUsuario(entrada) {
 
 
 // Modificar un usuario existente
-export async function updateInversion(id, nuevosDatos) {
+export async function updateUsuario(id, nuevosDatos) {
   try {
       
     const url = FIREBASE_USUARIOS_URL.replace('.json', `/${id}.json`);
