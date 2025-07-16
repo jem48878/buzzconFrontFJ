@@ -413,7 +413,7 @@ export async function validarCodigo2(entrada) {
 export async function recuperarPass2(entrada) {
   try {
     
-    console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
+    console.log("--Server Recuperar Contraseña--function2-----------" ,  JSON.stringify(entrada))    
     const usuario   = entrada.usuario
     
     let retorno = 0
@@ -461,28 +461,7 @@ export async function recuperarPass2(entrada) {
         
         
         const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
-        await updateUsuario(res.id, cambioPass);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        await updateUsuarioRT(res.id, cambioPass);
         
         const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
         console.log("Url cambio pass correo:" , url)
