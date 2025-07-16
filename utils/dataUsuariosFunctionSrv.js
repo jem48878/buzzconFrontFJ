@@ -51,12 +51,15 @@ export async function addUsuarioRT(entrada) {
 }    
     
 
-export async function updateUsuarioRT(idUsuario, usuario , entrada) {  
+export async function updateUsuarioRT(idUsuario , usuario , entrada) {  
+   console.log("- Server --updateUsuarioRT----")      
+   console.log("idUsuario:" + idUsuario + " usuario:" + usuario)    
     
    if (idUsuario == null ) {
-       entrada = {usuario}
-       const res = getUsuarioRT(entrada , 2 )
+       user = {usuario}
+       const res = getUsuarioRT(user , 2 )
        idUsuario = res.id
+       console.log("res.id:" , res.id)
    }   
     
    console.log("- Server --updateUsuarioRT----")      
@@ -190,7 +193,7 @@ export async function crearCuenta2(entrada) {
           await addUsuarioRT(nvoUsuario)   
        }
        else{
-          await updateUsuarioRT(res.id , null , nvoUsuario);
+          await updateUsuarioRT(res.id , nvoUsuario);
        }  
        
     }    
