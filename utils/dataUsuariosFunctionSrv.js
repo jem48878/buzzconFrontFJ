@@ -275,7 +275,7 @@ export async function validarCodigo2(entrada) {
           await updateUsuarioRT(res.id, {estado: 2,})    
             
         } catch (error) {
-          retonro = 999
+          retorno = 999
           mensaje = error.message    
         }
     }
