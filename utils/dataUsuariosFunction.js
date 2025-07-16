@@ -615,6 +615,19 @@ export async function validarNvaCuenta(entrada) {
 
 
 
+export async function reEnviarCorreo(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await reEnviarCorreo1(entrada)
+    else {
+        return await srvFn.reEnviarCorreo2(entrada)
+    }    
+}
+
+
+
+
 export async function validarCodigo(entrada) {
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
         
