@@ -687,6 +687,7 @@ export async function validarCodigo2(entrada) {
     let retorno = res.codRet
     let mensaje = res.message
     
+    console.log ("salida de srvFn.ValidarCodigo2")
       
     if (retorno == 0 )  {
         try {

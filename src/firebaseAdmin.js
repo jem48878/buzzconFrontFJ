@@ -35,8 +35,8 @@ try {
      }    
       
   } 
-  console.log("FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
-  console.log("FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
+  //console.log("FIREBASE_SERVICE_ACCOUNT_KEY cargada con project_id:", serviceAccount.project_id);
+  //console.log("FORMATO FINAL de private_key:", JSON.stringify(serviceAccount.private_key));          
 } catch (e) {
   console.error("Error al parsear FIREBASE_SERVICE_ACCOUNT_KEY", e);
 }

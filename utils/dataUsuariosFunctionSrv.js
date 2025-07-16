@@ -162,7 +162,7 @@ export async function crearCuenta2(entrada) {
        */        
        //genera url 
            
-       console.log("emj20")
+       //console.log("emj20")
       
        const actionCodeSettings = {
           url: `${dominio}/Access/VerifyRegistration/${usuario}`,
