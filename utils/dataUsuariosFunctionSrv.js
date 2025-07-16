@@ -278,7 +278,8 @@ export async function reEnviarCorreo2(entrada) {
                
     let emailAuth = `${usuario}@buzzcon.com` 
     let codVerificacion  = "" ; 
-    
+    let url =""; 
+      
     if (res !== null) {    
        try {                              
           await auth.getUserByEmail(emailAuth); 
