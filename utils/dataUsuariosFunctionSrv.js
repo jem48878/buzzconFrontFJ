@@ -18,14 +18,12 @@ export async function getUsuarioRT(entrada , opcion) {
     console.log("usuario:", usuario)
         
     const owner = process.env.NEXT_PUBLIC_OWNER
-    const jsonData = owner + 'dataUsuario'
-    console.log("jsondata:" , jsonData   )
+    const jsonData = owner + 'dataUsuario'    
     const dbRef = database.ref(jsonData);
     
     
     let data = await dbRef.orderByChild('usuario').equalTo(usuario).once('value');
-    //console.log('Salida getUsuarioRT:' , JSON.stringify(snapshot)    
-
+    
     if (!data.exists()) {
         return null; 
     } 
@@ -53,7 +51,7 @@ export async function addUsuarioRT(entrada) {
 
 export async function updateUsuarioRT(idUsuario , usuario , entrada) {  
    console.log("- Server --updateUsuarioRT----")      
-   console.log("idUsuario:" + idUsuario + " usuario:" + usuario)    
+   console.log("idUsuario:" + idUsuario + " usuario:" + usuario + ' entrada:' + JSON.stringify(entrada) )    
     
    if (idUsuario == null ) {
        const entrada = {usuario}
@@ -61,13 +59,10 @@ export async function updateUsuarioRT(idUsuario , usuario , entrada) {
        idUsuario = res.id
        console.log("res.id:" , res.id)
    }   
-    
-   console.log("- Server --updateUsuarioRT----")      
-   console.log('entrada:' , JSON.stringify(entrada) ) 
+  
    const owner = process.env.NEXT_PUBLIC_OWNER
    let jsonData = owner + 'dataUsuario'     
    jsonData     = `${jsonData}/${idUsuario}`;
-   console.log("jsonData" , jsonData)  
    await database.ref(jsonData).update(entrada);    
 }
 
@@ -99,7 +94,7 @@ export async function crearCuenta2(entrada) {
     let userCredential = null;
     let user = null ;    
     
-    console.log('Server Salida getUsuarioRT:' , JSON.stringify(res));   
+    //console.log('Server Salida getUsuarioRT:' , JSON.stringify(res));   
     if ( res == null || res.estado != 2) {
          
        const ahora           = new Date();
@@ -118,8 +113,7 @@ export async function crearCuenta2(entrada) {
        
         
        if (res !== null) {    
-           try {             
-            console.log("emj11")          
+           try {                              
             await auth.getUserByEmail(emailAuth); 
             console.log("Usuario ya registrado pero no validado")    
                
@@ -162,7 +156,6 @@ export async function crearCuenta2(entrada) {
        */        
        //genera url 
            
-       //console.log("emj20")
       
        const actionCodeSettings = {
           url: `${dominio}/Access/VerifyRegistration/${usuario}`,
@@ -170,9 +163,9 @@ export async function crearCuenta2(entrada) {
        };
     
        try {    
-         console.log("admin.auth().generateEmailVerificationLink");        
+         //console.log("admin.auth().generateEmailVerificationLink");        
          const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
-         console.log("sali admin.auth().generateEmailVerificationLink");            
+         //console.log("sali admin.auth().generateEmailVerificationLink");            
          codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
          console.log("oobCode verificacion FB :" , codVerificacion)  
        }
@@ -182,8 +175,6 @@ export async function crearCuenta2(entrada) {
          mensaje = "Error al generar link de verificación";
          return { codRet: retorno, message: mensaje };
        }    
-        
-        
         
        
        url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
@@ -219,6 +210,48 @@ export async function crearCuenta2(entrada) {
   }
 }
 
+
+
+/**/    
+/* Register.js
+/* Validar Nva Cuenta mientras se esta esperando despues de la registracion */    
+/**/   
+export async function validarNvaCuenta2(entrada) {
+  try {
+    
+    console.log("--Server validar Nueva Cuenta2----function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    const password  = entrada.password    
+    const email     = entrada.email
+   
+    console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    const res = await getUsuarioRT(entrada , 2 ) ;   
+    if ( res !== null) {
+        if (res.estado == 2 ) {
+           retorno = 0    
+           mensaje = "Usuario validdo";         
+        }
+        else{
+           retorno = 999   
+           mensaje = "Usuario no validdo";             
+        }
+    }    
+    else {
+       retorno = 999    
+       mensaje = "usuario no validado";           
+    } 
+    
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
 
 
 

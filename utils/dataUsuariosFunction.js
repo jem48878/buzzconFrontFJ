@@ -175,7 +175,7 @@ function generarIdUnico(longitud = 10) {
 /* Register.js
 /* Validar Nva Cuenta mientras se esta esperando despues de la registracion */    
 /**/   
-export async function validarNvaCuenta(entrada) {
+export async function validarNvaCuenta1(entrada) {
   try {
     
     console.log("--validar Nueva Cuenta----function-----------" ,  JSON.stringify(entrada))    
@@ -602,6 +602,18 @@ export async function crearCuenta(entrada) {
 }
 
 
+export async function validarNvaCUenta(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await validarNvaCuenta1(entrada)
+    else {
+        return await validarNvaCuenta2(entrada)
+    }    
+}
+
+
+
 
 export async function validarCodigo(entrada) {
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
@@ -670,6 +682,53 @@ export async function loginUsuario2(entrada) {
 
 
 
+/**/    
+/* Register.js
+/* Validar Nva Cuenta mientras se esta esperando despues de la registracion */    
+/**/   
+export async function validarNvaCuenta2(entrada) {
+  try {
+    
+    console.log("--validar Nueva Cuenta----function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    const password  = entrada.password    
+    const email     = entrada.email
+   
+    console.log("usuario:" + usuario + "  psw:" + password + "  correo:" + email)  
+    
+    /* se valida a nivel base propia */
+    const res = await srvFn.validarNvaCuenta2(entrada)    
+    let retorno = res.codRet
+    let mensaje = res.message  
+    
+      
+    if ( retrono == 0) {
+        try{
+           let emailAuth = `${usuario}@buzzcon.com`    
+           const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
+           if (!userCredential.user.emailVerified) {
+              mensaje =  'Usuario no verificado';
+              retorno = 999  
+           }       
+        } catch (error) {
+          retorno = 999
+          mensaje = error.message    
+        }
+    }    
+    
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
+
+
+
+
+
+
 /**/   
 /* VerifyRegistratatio.js
 /* Validar la url de registracion */    
@@ -682,6 +741,7 @@ export async function validarCodigo2(entrada) {
     const codVerificacion  = entrada.code        
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
+    /* se valida a nivel base propia */  
     const res = await srvFn.validarCodigo2(entrada)  
       
     let retorno = res.codRet
@@ -709,6 +769,10 @@ export async function validarCodigo2(entrada) {
      return { codRet: 999 , message: error.message };
   }
 }
+
+
+
+
 
 
 
