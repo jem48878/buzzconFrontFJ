@@ -45,8 +45,8 @@ export async function loginUsuario1(entrada) {
     
     
 async function getUsuario(entrada , opcion) {  
-  //console.log("desde getUsuario:" + JSON.stringify(entrada));        
-  //console.log("desde getUsuario opcion:" + opcion);            
+  console.log("desde getUsuario:" + JSON.stringify(entrada));        
+  console.log("desde getUsuario opcion:" + opcion);            
   const DataUsuarios = await loadUsuario(); 
     
   //console.log("desde get dataUsuario:" + JSON.stringify(DataUsuarios));          
@@ -331,7 +331,7 @@ export async function validarCodigo1(entrada) {
 /* Recuperar Contraseña */ 
 /* RecoverPass.js
 /**/   
-export async function recuperarPass(entrada) {
+export async function recuperarPass1(entrada) {
   try {
     
     console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
@@ -343,7 +343,7 @@ export async function recuperarPass(entrada) {
     const dominio = process.env.NEXT_PUBLIC_DOMINIO      
       
     const res = await getUsuario(entrada , 2 ) ;   
-    console.log("usuario:" + usuario +  " correo:" + res.email) 
+    //console.log("usuario:" + usuario +  " correo:" + res.email) 
       
     if ( res !== null && res.estado == 2) {         
         let mensaje = `Le informamos su password registrado en BuzzconFJ: ${res.password}`
@@ -572,6 +572,7 @@ export function validarPassword(password) {
 /***********************************************************************************************/
 /***********************************************************************************************/
 //fj-3 Para usar desde Vercel integrando con Firebase Authenticaion 
+//ejecutar en el server procesos sensibles 
 
 import { applyActionCode , createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { signInWithEmailAndPassword , signOut } from 'firebase/auth';
@@ -640,7 +641,19 @@ export async function validarCodigo(entrada) {
 
 
 
+ 
 
+export async function recuperarPass(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await recuperarPass1(entrada)
+    else {
+        return await srvFn.recuperarPass2(entrada)
+    }    
+}
+
+/******************************************************************************************/
 
 
 

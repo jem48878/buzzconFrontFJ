@@ -314,7 +314,7 @@ export async function reEnviarCorreo2(entrada) {
        await updateUsuarioRT(res.id , null, nvoLink);
     
              
-       console.log("Url correo verificacion cuenta:" , url)
+       console.log("Url correo re-envio verificacion cuenta:" , url)
        /*  sirve     
        if (retorno === 0) {
            await enviarEmailLink({        
@@ -338,35 +338,6 @@ export async function reEnviarCorreo2(entrada) {
      
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -435,6 +406,107 @@ export async function validarCodigo2(entrada) {
 
 
 
+/**/    
+/* Recuperar Contraseña */ 
+/* RecoverPass.js
+/**/   
+export async function recuperarPass2(entrada) {
+  try {
+    
+    console.log("--Recuperar Contraseña--function-----------" ,  JSON.stringify(entrada))    
+    const usuario   = entrada.usuario
+    
+    let retorno = 0
+    let mensaje = ""
+        
+    const dominio = process.env.NEXT_PUBLIC_DOMINIO      
+      
+    const res = await getUsuarioRT(entrada , 2 ) ;  
+      
+    let emailAuth = `${usuario}@buzzcon.com` 
+    let codVerificacion  = "" ; 
+    let url ="";     
+      
+      
+    if ( res !== null && res.estado == 2) {                 
+        const ahora              = new Date();        
+        const fechaChgPass        = ahora.toLocaleDateString('es-AR');
+        const horaChgPass         = ahora.toLocaleTimeString('es-AR'); 
+        const codVerificacionPass = "" ;
+       
+        
+        try {                              
+          await auth.getUserByEmail(emailAuth); 
+          console.log("Usuario ya registrado no validado")    
+           
+          const actionCodeSettings = {
+              url: `${dominio}/Access/VerifyRegistration/${usuario}`,
+              handleCodeInApp: true,
+          };
+    
+         //console.log("admin.auth().generatePasswordResetLink");        
+         const verificationLink = await auth.generatePasswordResetLink(emailAuth, actionCodeSettings);
+         //console.log("sali admin.auth().generatePasswordResetLink");            
+            
+         codVerificacionPass = new URL(verificationLink).searchParams.get('oobCode');    
+         console.log("oobCode verificacion reset passFB :" , codVerificacion)  
+           
+       } catch (error) {
+         console.error("Error en la generacion del link de re-envio de correo :", error);
+         retorno = 999;
+         mensaje = "Error al generar el  link de re-envio de correo";
+         return { codRet: retorno, message: mensaje };
+       }    
+        
+        
+        
+        const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
+        await updateUsuario(res.id, cambioPass);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
+        console.log("Url cambio pass correo:" , url)
+        /*  para correo con url cambiar contraseña */
+        /*
+        await enviarEmailLink({        
+          email: res.email,
+          time: new Date().toLocaleTimeString('es-AR'),
+          link: url,
+        });
+        */    
+        
+        
+    }
+    else {
+        retorno = 999;
+        mensaje = "Usuario no existe"
+    }     
+    return { codRet: retorno , message: mensaje };    
+  } catch (error) {
+    return { codRet: 999 , message: error };
+     
+  }
+}
 
 
 
