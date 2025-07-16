@@ -51,7 +51,14 @@ export async function addUsuarioRT(entrada) {
 }    
     
 
-export async function updateUsuarioRT(idUsuario, entrada) {  
+export async function updateUsuarioRT(idUsuario, usuario , entrada) {  
+    
+   if (idUsuario == null ) {
+       entrada = {usuario}
+       const res = getUsuarioRT(entrada , 2 )
+       idUsuario = res.id
+   }   
+    
    console.log("- Server --updateUsuarioRT----")      
    console.log('entrada:' , JSON.stringify(entrada) ) 
    const owner = process.env.NEXT_PUBLIC_OWNER
@@ -183,7 +190,7 @@ export async function crearCuenta2(entrada) {
           await addUsuarioRT(nvoUsuario)   
        }
        else{
-          await updateUsuarioRT(res.id , nvoUsuario);
+          await updateUsuarioRT(res.id , null , nvoUsuario);
        }  
        
     }    

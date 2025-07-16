@@ -694,7 +694,7 @@ export async function validarCodigo2(entrada) {
           await applyActionCode(auth, codVerificacion);    
             
           console.log("updateUsuarioRT")        
-          await srvFn.updateUsuarioRT(res.id, {estado: 2,})    
+          await srvFn.updateUsuarioRT(null, usuario , {estado: 2,})    
             
         } catch (error) {
           retorno = 999
