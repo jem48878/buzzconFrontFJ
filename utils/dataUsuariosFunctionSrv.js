@@ -57,7 +57,7 @@ export async function updateUsuarioRT(idUsuario , usuario , entrada) {
     
    if (idUsuario == null ) {
        const entrada = {usuario}
-       const res = getUsuarioRT(entrada , 2 )
+       const res = await getUsuarioRT(entrada , 2 )
        idUsuario = res.id
        console.log("res.id:" , res.id)
    }   
