@@ -332,6 +332,7 @@ export async function reEnviarCorreo2(entrada) {
       
     return { codRet: retorno , message: mensaje };    
   } catch (error) {
+    console.log ("error update/envio correo datos de generacion link:" , error.message)  
     return { codRet: 999 , message: error.message };
      
   }
