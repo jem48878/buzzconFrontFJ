@@ -424,7 +424,7 @@ export async function recuperarPass2(entrada) {
     const res = await getUsuarioRT(entrada , 2 ) ;  
       
     let emailAuth = `${usuario}@buzzcon.com` 
-    let codVerificacion  = "" ; 
+    let codVerificacionPass  = "" ; 
     let url ="";     
       
       
@@ -432,7 +432,7 @@ export async function recuperarPass2(entrada) {
         const ahora              = new Date();        
         const fechaChgPass        = ahora.toLocaleDateString('es-AR');
         const horaChgPass         = ahora.toLocaleTimeString('es-AR'); 
-        const codVerificacionPass = "" ;
+        codVerificacionPass = "" ;
        
         
         try {                              
@@ -449,7 +449,7 @@ export async function recuperarPass2(entrada) {
          console.log("sali admin.auth().generatePasswordResetLink:"+ verificationLink );            
             
          codVerificacionPass = new URL(verificationLink).searchParams.get('oobCode');    
-         console.log("oobCode verificacion reset passFB :" , codVerificacion)  
+         console.log("oobCode verificacion reset passFB :" , codVerificacionPass)  
            
        } catch (error) {
          console.error("Error en la generacion del link de re-envio de correo :", error);
