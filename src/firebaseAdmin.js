@@ -2,6 +2,7 @@
 //para escalar a usar firebase Authentication
 //para modo local agregar en src/firebaseServiceAccount.json, se debe borrar para subir a vercel porque da //error al subir a git por exponer claves privadas
 
+//src/firebaseAdmin
 import admin from "firebase-admin";
 
 let serviceAccount = {};

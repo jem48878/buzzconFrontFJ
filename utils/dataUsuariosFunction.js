@@ -609,7 +609,7 @@ export async function validarCodigo(entrada) {
     if ( entorno == 'local' ) 
         return await validarCodigo1(entrada)
     else {
-        return await srvFn.validarCodigo2(entrada)
+        return await validarCodigo2(entrada)
     }    
 }
 
@@ -668,6 +668,45 @@ export async function loginUsuario2(entrada) {
 }
 
 
+
+
+/**/   
+/* VerifyRegistratatio.js
+/* Validar la url de registracion */    
+/**/   
+export async function validarCodigo2(entrada) {
+  try {
+    
+    console.log("--validar Codigo2----function-----------" ,  JSON.stringify(entrada)) 
+    const usuario          = entrada.user
+    const codVerificacion  = entrada.code        
+    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
+    
+    const res = await srvFn.validarCodigo2(entrada)  
+      
+    let retorno = res.retorno
+    let mensaje = res.mensaje
+    
+      
+    if (retorno == 0 )  {
+        try {
+          console.log("auth.applyActionCode")    
+          await auth.applyActionCode(codVerificacion)
+          console.log("updateUsuarioRT")        
+          await srvFn.updateUsuarioRT(res.id, {estado: 2,})    
+            
+        } catch (error) {
+          retorno = 999
+          mensaje = error.message    
+        }
+    }
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+     return { codRet: 999 , message: error.message };
+  }
+}
 
 
 
