@@ -223,7 +223,7 @@ export async function crearCuenta2(entrada) {
 export async function validarCodigo2(entrada) {
   try {
     
-    console.log("--SERVER validar Codigo----function-----------" ,  JSON.stringify(entrada))    
+    console.log("--SERVER validar Codigo2----function-----------" ,  JSON.stringify(entrada))    
     const usuario          = entrada.user
     const codVerificacion  = entrada.code        
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
@@ -280,6 +280,8 @@ export async function validarCodigo2(entrada) {
         }
     }
     */  
+    
+    console.log("retorno:" + retorno + " mensaje:" + mensaje)  
       
     return { codRet: retorno , message: mensaje };
     

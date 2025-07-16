@@ -684,8 +684,8 @@ export async function validarCodigo2(entrada) {
     
     const res = await srvFn.validarCodigo2(entrada)  
       
-    let retorno = res.retorno
-    let mensaje = res.mensaje
+    let retorno = res.codRet
+    let mensaje = res.message
     
       
     if (retorno == 0 )  {
