@@ -602,7 +602,7 @@ export async function crearCuenta(entrada) {
 }
 
 
-export async function validarNvaCUenta(entrada) {
+export async function validarNvaCuenta(entrada) {
     const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
         
     if ( entorno == 'local' ) 

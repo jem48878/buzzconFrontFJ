@@ -99,7 +99,7 @@ function Register() {
     }
     catch (err) {
       //setError(err.message);    
-      console.log("mensaje:" , err.message)    
+      console.log("mensaje Register ValidarEstado:" , err.message)    
     }
       
   };    
