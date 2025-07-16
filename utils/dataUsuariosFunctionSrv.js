@@ -461,7 +461,7 @@ export async function recuperarPass2(entrada) {
         
         
         const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
-        await updateUsuarioRT(res.id, cambioPass);
+        await updateUsuarioRT(res.id, null , cambioPass);
         
         const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
         console.log("Url cambio pass correo:" , url)
