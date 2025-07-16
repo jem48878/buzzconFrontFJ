@@ -437,16 +437,16 @@ export async function recuperarPass2(entrada) {
         
         try {                              
           await auth.getUserByEmail(emailAuth); 
-          console.log("Usuario ya registrado no validado")    
+          console.log("Usuario ya registrado restablecer contraseña")    
            
           const actionCodeSettings = {
               url: `${dominio}/Access/VerifyRegistration/${usuario}`,
               handleCodeInApp: true,
           };
     
-         //console.log("admin.auth().generatePasswordResetLink");        
+         console.log("admin.auth().generatePasswordResetLink");        
          const verificationLink = await auth.generatePasswordResetLink(emailAuth, actionCodeSettings);
-         //console.log("sali admin.auth().generatePasswordResetLink");            
+         console.log("sali admin.auth().generatePasswordResetLink:"+ verificationLink );            
             
          codVerificacionPass = new URL(verificationLink).searchParams.get('oobCode');    
          console.log("oobCode verificacion reset passFB :" , codVerificacion)  
