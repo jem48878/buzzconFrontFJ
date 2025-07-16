@@ -266,7 +266,7 @@ export async function validarCodigo2(entrada) {
         mensaje = "No se encontradron los datos a verificar"; 
     } 
      
-      
+    /*  
     if (retorno == 0 )  {
         try {
           console.log("auth.applyActionCode")    
@@ -279,7 +279,7 @@ export async function validarCodigo2(entrada) {
           mensaje = error.message    
         }
     }
-      
+    */  
       
     return { codRet: retorno , message: mensaje };
     

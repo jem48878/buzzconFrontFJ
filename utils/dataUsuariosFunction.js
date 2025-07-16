@@ -690,8 +690,9 @@ export async function validarCodigo2(entrada) {
       
     if (retorno == 0 )  {
         try {
-          console.log("auth.applyActionCode")    
-          await auth.applyActionCode(codVerificacion)
+          console.log("applyActionCode") 
+          await applyActionCode(auth, codVerificacion);    
+            
           console.log("updateUsuarioRT")        
           await srvFn.updateUsuarioRT(res.id, {estado: 2,})    
             
