@@ -51,7 +51,7 @@ async function addUsuarioRT(entrada) {
 }    
     
 
-async function updateUsuarioRT(idUsuario, entrada) {  
+export async function updateUsuarioRT(idUsuario, entrada) {  
    console.log("- Server --updateUsuarioRT----")      
    console.log('entrada:' , JSON.stringify(entrada) ) 
    const owner = process.env.NEXT_PUBLIC_OWNER
