@@ -703,7 +703,7 @@ export async function validarNvaCuenta2(entrada) {
     let mensaje = res.message  
     
       
-    if ( retrono == 0) {
+    if ( retorno == 0) {
         try{
            let emailAuth = `${usuario}@buzzcon.com`    
            const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
