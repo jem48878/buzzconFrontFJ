@@ -856,7 +856,7 @@ export async function cambiarContraseña2(entrada) {
     console.log("--Server Cambiar Contraseña2--function-----------" ,  JSON.stringify(entrada))    
     const usuario          = entrada.usuario
     const password         = entrada.password
-    const codVerificacion  = entrada.code  
+    const codVerificacion  = entrada.code.substring(10);  
     
     let retorno = 0
     let mensaje = ""
