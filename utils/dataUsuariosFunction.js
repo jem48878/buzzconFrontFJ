@@ -695,7 +695,10 @@ export async function loginUsuario2(entrada) {
     if (retorno == 0 ) {
        try {    
          let emailAuth = `${usuario}@buzzcon.com` 
-         console.log("user FBA" , srvFn.getUserFBA(usuario))  
+         
+         let aux = await srvFn.getUserFBA(usuario)
+         console.log("user FBA" , aux )  
+           
          const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
          if (!userCredential.user.emailVerified) {
              mensaje =  'Usuario no verificado';
@@ -744,7 +747,8 @@ export async function validarNvaCuenta2(entrada) {
     if ( retorno == 0) {
         try{
            let emailAuth = `${usuario}@buzzcon.com`  
-           console.log("user FBA" , srvFn.getUserFBA(usuario))  
+           let aux = await srvFn.getUserFBA(usuario)
+           console.log("user FBA" , aux)  
       
            const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
            if (!userCredential.user.emailVerified) {
@@ -779,7 +783,8 @@ export async function validarCodigo2(entrada) {
     const usuario          = entrada.user
     const codVerificacion  = entrada.code.substring(10);  
     
-    console.log("codigo FBA" , srvFn.getCodeFBA(entrada.code))  
+    let aux = await  srvFn.getCodeFBA(entrada.code)  
+    console.log("codigo FBA" , aux )  
       
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
