@@ -834,7 +834,8 @@ export async function validarCodigoPass2(entrada) {
     
       
     console.log ("salida de srvFn.ValidarCodigoPass2:" + retorno + "-" + mensaje )
-      
+     
+    /*  
     if (retorno == 0 )  {
         try {
           console.log("applyActionCode") 
@@ -844,6 +845,8 @@ export async function validarCodigoPass2(entrada) {
           mensaje = error.message    
         }
     }
+    */  
+      
       
     return { codRet: retorno , message: mensaje };
     

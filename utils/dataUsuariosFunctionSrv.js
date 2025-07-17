@@ -11,6 +11,16 @@ import { database , auth }  from '@/src/firebaseAdmin';
 /*------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------------*/
 
+function generarIdUnico(longitud = 10) {
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let resultado = '';
+  for (let i = 0; i < longitud; i++) {
+    resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+  }
+  return resultado;
+}
+
+
 export async function getUsuarioRT(entrada , opcion) {  
     
     console.log("---Server getUsuarioRT----")
@@ -31,6 +41,22 @@ export async function getUsuarioRT(entrada , opcion) {
     const id  = Object.keys(data.val())[0]; 
     const res = Object.values(data.val())[0];      
     data = {id , ...res};  
+    
+    switch (opcion) {        
+      case 3: 
+         if (res.codVerificacion.trim() != entrada.codVerificacion )                               
+             return null    
+         break;      
+      case 4:
+         if (res.codVerificacionPass.trim() != entrada.codVerificacion )                               
+             return null
+         break; 
+    default:
+      break;
+    } 
+    
+    
+    
     
     //console.log('Server Salida getUsuarioRT:' , JSON.stringify(data));
     return data;
@@ -230,6 +256,7 @@ export async function validarNvaCuenta2(entrada) {
     let mensaje = ""
     
     const res = await getUsuarioRT(entrada , 2 ) ;   
+      
     if ( res !== null) {
         if (res.estado == 2 ) {
            retorno = 0    
@@ -421,10 +448,11 @@ export async function recuperarPass2(entrada) {
         
     const dominio = process.env.NEXT_PUBLIC_DOMINIO      
       
-    const res = await getUsuarioRT(entrada , 2 ) ;  
+    const res = await getUsuarioRT(entrada , 4 ) ;  
       
     let emailAuth = `${usuario}@buzzcon.com` 
-    let codVerificacionPass  = "" ; 
+    let codLocal  = generarIdUnico() ; 
+    let codVerificacionPass  = "" ;
     let url ="";     
       
       
@@ -448,7 +476,7 @@ export async function recuperarPass2(entrada) {
          const verificationLink = await auth.generatePasswordResetLink(emailAuth, actionCodeSettings);
          //console.log("sali admin.auth().generatePasswordResetLink:"+ verificationLink );            
             
-         codVerificacionPass = new URL(verificationLink).searchParams.get('oobCode');    
+         codVerificacionPass = codLocal + new URL(verificationLink).searchParams.get('oobCode');    
          console.log("oobCode verificacion reset passFB :" , codVerificacionPass)  
            
        } catch (error) {
@@ -460,11 +488,15 @@ export async function recuperarPass2(entrada) {
         
         
         
-        const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
-        await updateUsuarioRT(res.id, null , cambioPass);
         
         const url = `${dominio}/Access/ChangePass/${usuario}/${codVerificacionPass}`   
         console.log("Url cambio pass correo:" , url)
+        
+        codVerificacionPass = codLocal
+        const cambioPass = { fechaChgPass , horaChgPass , codVerificacionPass }; 
+        await updateUsuarioRT(res.id, null , cambioPass);
+                
+        
         /*  para correo con url cambiar contraseña */
         /*
         await enviarEmailLink({        
@@ -499,7 +531,7 @@ export async function validarCodigoPass2(entrada) {
     
     console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
     const usuario          = entrada.user
-    const codVerificacion  = entrada.code        
+    const codVerificacion  = entrada.code.substring(0, 10);        
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
     let retorno = 0
