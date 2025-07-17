@@ -561,7 +561,7 @@ export function validarPassword(password) {
 //fj-3 Para usar desde Vercel integrando con Firebase Authenticaion 
 //ejecutar en el server procesos sensibles 
 
-import { applyActionCode , createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { confirmPasswordReset , applyActionCode , createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { signInWithEmailAndPassword , signOut } from 'firebase/auth';
 import { getDatabase, ref, set , push , update , query, orderByChild, equalTo, get , child } from 'firebase/database';
 import { database , auth }  from '@/src/firebase';
