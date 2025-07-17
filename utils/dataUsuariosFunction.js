@@ -824,9 +824,7 @@ export async function validarCodigoPass2(entrada) {
     const codVerificacion  = entrada.code        
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
-    let retorno = 0
-    let mensaje = ""
-   
+       
     /*se valida a nivel base propia en el server*/
     
     const res = await srvFn.validarCodigoPass2(entrada)    
