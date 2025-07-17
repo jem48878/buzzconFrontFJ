@@ -21,6 +21,17 @@ function generarIdUnico(longitud = 10) {
 }
 
 
+export async function getUserFBA(usuario) {  
+    return `${usuario}@buzzcon.com`   
+}
+
+
+export async function getCodeFBA(codigo) { 
+    return codigo.substring(10);  
+}
+
+
+
 export async function getUsuarioRT(entrada , opcion) {  
     
     console.log("---Server getUsuarioRT----")
@@ -61,8 +72,6 @@ export async function getUsuarioRT(entrada , opcion) {
     //console.log('Server Salida getUsuarioRT:' , JSON.stringify(data));
     return data;
 }
-
-
 
 
 export async function addUsuarioRT(entrada) {  
@@ -127,12 +136,13 @@ export async function crearCuenta2(entrada) {
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        const estado          = 0  ;
-       let  codVerificacion  = "" ;
+       let   codVerificacion = "" ;
+       let   codLocal        = generarIdUnico() ;     
        
        const fechaChgPass    = ahora.toLocaleDateString('es-AR');
        const horaChgPass     = ahora.toLocaleTimeString('es-AR'); 
-       const codVerificacionPass = "" ;
-       
+       const codVerificacionPass = "" ;       
+        
        const dominio = process.env.NEXT_PUBLIC_DOMINIO      
                
        let emailAuth = `${usuario}@buzzcon.com` 
@@ -192,7 +202,7 @@ export async function crearCuenta2(entrada) {
          //console.log("admin.auth().generateEmailVerificationLink");        
          const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
          //console.log("sali admin.auth().generateEmailVerificationLink");            
-         codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
+         codVerificacion = codLocal + new URL(verificationLink).searchParams.get('oobCode');  
          console.log("oobCode verificacion FB :" , codVerificacion)  
        }
        catch (error) {
@@ -203,7 +213,9 @@ export async function crearCuenta2(entrada) {
        }    
         
        
-       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}`   
+       url = `${dominio}/Access/VerifyRegistration/${usuario}/${codVerificacion}` 
+       
+       codVerificacion  = codLocal 
        const nvoUsuario = {usuario , password , email , fechaAlta , horaAlta , estado , codVerificacion , fechaChgPass , horaChgPass , codVerificacionPass }; 
         
        if (res == null) {       
@@ -305,6 +317,7 @@ export async function reEnviarCorreo2(entrada) {
                
     let emailAuth = `${usuario}@buzzcon.com` 
     let codVerificacion  = "" ; 
+    let   codLocal = generarIdUnico() ;       
     let url =""; 
       
     if (res !== null) {    
@@ -320,7 +333,7 @@ export async function reEnviarCorreo2(entrada) {
          //console.log("admin.auth().generateEmailVerificationLink");        
          const verificationLink = await auth.generateEmailVerificationLink(emailAuth, actionCodeSettings);
          //console.log("sali admin.auth().generateEmailVerificationLink");            
-         codVerificacion = new URL(verificationLink).searchParams.get('oobCode');    
+         codVerificacion = codLocal + new URL(verificationLink).searchParams.get('oobCode');    
          console.log("oobCode verificacion FB :" , codVerificacion)  
            
        } catch (error) {
@@ -337,6 +350,7 @@ export async function reEnviarCorreo2(entrada) {
        const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
        const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
        
+       codVerificacion = codLocal ;    
        const nvoLink = {fechaAlta , horaAlta , codVerificacion }; 
        await updateUsuarioRT(res.id , null, nvoLink);
     
@@ -379,14 +393,14 @@ export async function validarCodigo2(entrada) {
     
     console.log("--SERVER validar Codigo2----function-----------" ,  JSON.stringify(entrada))    
     const usuario          = entrada.user
-    const codVerificacion  = entrada.code        
+    const codVerificacion  = entrada.code.substring(0, 10); 
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
     let retorno = 0
     let mensaje = "Usuario validado";
     
     entrada = {usuario , codVerificacion}; 
-    const res = await getUsuarioRT(entrada , 2 ) ;   
+    const res = await getUsuarioRT(entrada , 3 ) ;   
       
     if ( res !== null) {
        if (res.estado == 0 ) {

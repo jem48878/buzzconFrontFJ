@@ -554,7 +554,7 @@ export function validarPassword(password) {
 
 
 
-
+// FUNCIONES DESDE VERCEL DATOS SENSIBLES EN EL SERVER //
 /***********************************************************************************************/
 /***********************************************************************************************/
 /***********************************************************************************************/
@@ -694,7 +694,8 @@ export async function loginUsuario2(entrada) {
       
     if (retorno == 0 ) {
        try {    
-         let emailAuth = `${usuario}@buzzcon.com`    
+         let emailAuth = `${usuario}@buzzcon.com` 
+         console.log("user FBA" , srvFn.getUserFBA(usuario))  
          const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
          if (!userCredential.user.emailVerified) {
              mensaje =  'Usuario no verificado';
@@ -742,7 +743,9 @@ export async function validarNvaCuenta2(entrada) {
       
     if ( retorno == 0) {
         try{
-           let emailAuth = `${usuario}@buzzcon.com`    
+           let emailAuth = `${usuario}@buzzcon.com`  
+           console.log("user FBA" , srvFn.getUserFBA(usuario))  
+      
            const userCredential = await signInWithEmailAndPassword(auth, emailAuth, password);         
            if (!userCredential.user.emailVerified) {
               mensaje =  'Usuario no verificado';
@@ -765,10 +768,6 @@ export async function validarNvaCuenta2(entrada) {
 
 
 
-
-
-
-
 /**/   
 /* VerifyRegistratatio.js
 /* Validar la url de registracion */    
@@ -778,7 +777,10 @@ export async function validarCodigo2(entrada) {
     
     console.log("--validar Codigo2----function-----------" ,  JSON.stringify(entrada)) 
     const usuario          = entrada.user
-    const codVerificacion  = entrada.code        
+    const codVerificacion  = entrada.code.substring(10);  
+    
+    console.log("codigo FBA" , srvFn.getCodeFBA(entrada.code))  
+      
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
     /* se valida a nivel base propia */  
@@ -812,41 +814,6 @@ export async function validarCodigo2(entrada) {
 
 
 
-
-/**/    
-/* Cambiar Contraseña */   
-/* Validar codigo ChangePass.js */
-/**/ 
-export async function XXXvalidarCodigoPass2(entrada) {
-  try {
-    
-    console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
-    const usuario          = entrada.user
-    const codVerificacion  = entrada.code        
-    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
-    
-       
-    /*se valida a nivel base propia en el server*/
-    const res = await srvFn.validarCodigoPass2(entrada)    
-    
-    let retorno = res.codRet
-    let mensaje = res.message  
-    
-      
-    console.log ("salida de srvFn.ValidarCodigoPass2:" + retorno + "-" + mensaje )
-      
-    return { codRet: retorno , message: mensaje };
-    
-  } catch (error) {
-     return { codRet: 999 , message: error };
-  }
-}
-
-
-
-
-
-
 /**/    
 /* Cambiar Contraseña ChangePass.js*/    
 /**/   
@@ -857,14 +824,13 @@ export async function cambiarContraseña2(entrada) {
     const usuario          = entrada.usuario
     const password         = entrada.password
     const codVerificacion  = entrada.code.substring(10);  
-    
+    console.log("codigo FBA" , srvFn.getCodeFBA(entrada.code))  
+      
     let retorno = 0
     let mensaje = ""
     
-    try {
-        console.log("confirmPasswordReset")         
+    try {     
         await confirmPasswordReset(auth, codVerificacion, password);
-        console.log("sali confirmPasswordReset") 
         //solo para probar se debe sacar la actualizacion en base propia 
          await srvFn.updateUsuarioRT(null, usuario , {password: password})    
         
