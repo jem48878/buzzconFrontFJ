@@ -448,7 +448,7 @@ export async function recuperarPass2(entrada) {
         
     const dominio = process.env.NEXT_PUBLIC_DOMINIO      
       
-    const res = await getUsuarioRT(entrada , 4 ) ;  
+    const res = await getUsuarioRT(entrada , 2 ) ;  
       
     let emailAuth = `${usuario}@buzzcon.com` 
     let codLocal  = generarIdUnico() ; 
@@ -539,7 +539,7 @@ export async function validarCodigoPass2(entrada) {
     //await sleep(2000);   //solo para ver el efecto de espera 
     
     entrada = {usuario , codVerificacion}; 
-    const res = await getUsuarioRT(entrada , 2) ;   
+    const res = await getUsuarioRT(entrada , 4) ;   
       
     if ( res !== null && res.estado == 2) {       
        const ahora           = new Date();
