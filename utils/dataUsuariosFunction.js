@@ -394,7 +394,7 @@ export async function recuperarPass1(entrada) {
 /**/    
 /* Cambiar Contraseña ChangePass.js*/    
 /**/   
-export async function cambiarContraseña(entrada) {
+export async function cambiarContraseña1(entrada) {
   try {
     
     console.log("--Cambiar Contraseña--function-----------" ,  JSON.stringify(entrada))    
@@ -477,19 +477,6 @@ export async function validarCodigoPass1(entrada) {
      return { codRet: 999 , message: error };
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -657,9 +644,23 @@ export async function validarCodigoPass(entrada) {
     if ( entorno == 'local' ) 
         return await validarCodigoPass1(entrada)
     else {
-        return await validarCodigoPass2(entrada)
+        return await srvFn.validarCodigoPass2(entrada)
     }    
 }
+
+
+
+export async function cambiarContraseña(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await cambiarContraseña1(entrada)
+    else {
+        return await cambiarContraseña2(entrada)
+    }    
+}
+
+
 
 
 
@@ -816,7 +817,7 @@ export async function validarCodigo2(entrada) {
 /* Cambiar Contraseña */   
 /* Validar codigo ChangePass.js */
 /**/ 
-export async function validarCodigoPass2(entrada) {
+export async function XXXvalidarCodigoPass2(entrada) {
   try {
     
     console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
@@ -826,7 +827,6 @@ export async function validarCodigoPass2(entrada) {
     
        
     /*se valida a nivel base propia en el server*/
-    
     const res = await srvFn.validarCodigoPass2(entrada)    
     
     let retorno = res.codRet
@@ -834,19 +834,6 @@ export async function validarCodigoPass2(entrada) {
     
       
     console.log ("salida de srvFn.ValidarCodigoPass2:" + retorno + "-" + mensaje )
-     
-    /*  
-    if (retorno == 0 )  {
-        try {
-          console.log("applyActionCode") 
-          await applyActionCode(auth, codVerificacion);    
-        } catch (error) {
-          retorno = 999
-          mensaje = error.message    
-        }
-    }
-    */  
-      
       
     return { codRet: retorno , message: mensaje };
     
@@ -855,6 +842,43 @@ export async function validarCodigoPass2(entrada) {
   }
 }
 
+
+
+
+
+
+/**/    
+/* Cambiar Contraseña ChangePass.js*/    
+/**/   
+export async function cambiarContraseña2(entrada) {
+  try {
+    
+    console.log("--Server Cambiar Contraseña2--function-----------" ,  JSON.stringify(entrada))    
+    const usuario          = entrada.usuario
+    const password         = entrada.password
+    const codVerificacion  = entrada.code  
+    
+    let retorno = 0
+    let mensaje = ""
+    
+    try {
+        console.log("confirmPasswordReset")         
+        await confirmPasswordReset(auth, codVerificacion, password);
+        console.log("sali confirmPasswordReset") 
+        //solo para probar se debe sacar la actualizacion en base propia 
+         await srvFn.updateUsuarioRT(null, usuario , {password: password})    
+        
+    } catch (error) {
+        retorno = 999
+        mensaje = error.message    
+    }
+    
+    return { codRet: retorno , message: mensaje };    
+      
+  } catch (error) {
+    return { codRet: 999 , message: error };
+  }
+}
 
 
 

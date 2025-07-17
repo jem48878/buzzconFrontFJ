@@ -529,13 +529,13 @@ export async function recuperarPass2(entrada) {
 export async function validarCodigoPass2(entrada) {
   try {
     
-    console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
+    console.log("--Server validar Codigo Pass2----function-----------" ,  JSON.stringify(entrada))    
     const usuario          = entrada.user
     const codVerificacion  = entrada.code.substring(0, 10);        
     console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
     
     let retorno = 0
-    let mensaje = ""
+    let mensaje = "Validacion Ok"
     //await sleep(2000);   //solo para ver el efecto de espera 
     
     entrada = {usuario , codVerificacion}; 

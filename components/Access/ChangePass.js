@@ -100,7 +100,7 @@ function ChangePass({ params }) {
       if (password !== passwordC) {      
         throw new Error ( "las password no coinciden" )
       }    
-      const entrada = {usuario , password};   
+      const entrada = {usuario , password ,  code};   
       data = await cambiarContraseña(entrada) 
         
       if (data.codRet != 0 )  throw new Error (data.message)    
