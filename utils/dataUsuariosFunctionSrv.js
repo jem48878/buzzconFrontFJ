@@ -444,9 +444,9 @@ export async function recuperarPass2(entrada) {
               handleCodeInApp: true,
           };
     
-         console.log("admin.auth().generatePasswordResetLink");        
+         //console.log("admin.auth().generatePasswordResetLink");        
          const verificationLink = await auth.generatePasswordResetLink(emailAuth, actionCodeSettings);
-         console.log("sali admin.auth().generatePasswordResetLink:"+ verificationLink );            
+         //console.log("sali admin.auth().generatePasswordResetLink:"+ verificationLink );            
             
          codVerificacionPass = new URL(verificationLink).searchParams.get('oobCode');    
          console.log("oobCode verificacion reset passFB :" , codVerificacionPass)  
@@ -486,6 +486,69 @@ export async function recuperarPass2(entrada) {
      
   }
 }
+
+
+
+
+/**/    
+/* Cambiar Contraseña */   
+/* Validar codigo ChangePass.js */
+/**/ 
+export async function validarCodigoPass2(entrada) {
+  try {
+    
+    console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
+    const usuario          = entrada.user
+    const codVerificacion  = entrada.code        
+    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
+    
+    let retorno = 0
+    let mensaje = ""
+    //await sleep(2000);   //solo para ver el efecto de espera 
+    
+    entrada = {usuario , codVerificacion}; 
+    const res = await getUsuarioRT(entrada , 2) ;   
+      
+    if ( res !== null && res.estado == 2) {       
+       const ahora           = new Date();
+       const fechaAlta       = ahora.toLocaleDateString('es-AR'); 
+       const horaAlta        = ahora.toLocaleTimeString('es-AR'); 
+        
+       if (fechaAlta == res.fechaChgPass)  {
+            const hoy = new Date().toISOString().split('T')[0]; // formato  "2025-06-25"
+            const fechaHoraAlta = new Date(`${hoy}T${res.horaChgPass}`);
+            const diferenciaSegundos = (ahora - fechaHoraAlta) / 1000;
+            /*
+            if (diferenciaSegundos > 60) {
+               retorno = 999    
+               mensaje = "Verificacion caducada";    
+            }
+            */
+        }               
+        else {  //otra fecha 
+           retorno = 999    
+           mensaje = "Verificacion caducada"; 
+        }
+    }    
+    else {
+        retorno = 999    
+        mensaje = "No se encontradron los datos a verificar"; 
+    } 
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+     return { codRet: 999 , message: error };
+  }
+}
+
+
+
+
+
+
+
+
 
 
 

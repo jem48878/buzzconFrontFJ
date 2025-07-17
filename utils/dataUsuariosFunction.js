@@ -428,7 +428,7 @@ export async function cambiarContraseña(entrada) {
 /* Cambiar Contraseña */   
 /* Validar codigo ChangePass.js */
 /**/ 
-export async function validarCodigoPass(entrada) {
+export async function validarCodigoPass1(entrada) {
   try {
     
     console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
@@ -638,9 +638,6 @@ export async function validarCodigo(entrada) {
         return await validarCodigo2(entrada)
     }    
 }
-
-
-
  
 
 export async function recuperarPass(entrada) {
@@ -652,6 +649,19 @@ export async function recuperarPass(entrada) {
         return await srvFn.recuperarPass2(entrada)
     }    
 }
+
+
+export async function validarCodigoPass(entrada) {
+    const entorno = process.env.NEXT_PUBLIC_ENTORNO;     
+        
+    if ( entorno == 'local' ) 
+        return await validarCodigoPass1(entrada)
+    else {
+        return await validarCodigoPass2(entrada)
+    }    
+}
+
+
 
 /******************************************************************************************/
 
@@ -800,6 +810,49 @@ export async function validarCodigo2(entrada) {
 }
 
 
+
+
+/**/    
+/* Cambiar Contraseña */   
+/* Validar codigo ChangePass.js */
+/**/ 
+export async function validarCodigoPass2(entrada) {
+  try {
+    
+    console.log("--validar Codigo Pass----function-----------" ,  JSON.stringify(entrada))    
+    const usuario          = entrada.user
+    const codVerificacion  = entrada.code        
+    console.log("usuario:" + usuario + "  codigo:" + codVerificacion)  
+    
+    let retorno = 0
+    let mensaje = ""
+   
+    /*se valida a nivel base propia en el server*/
+    
+    const res = await srvFn.validarCodigoPass2(entrada)    
+    
+    let retorno = res.codRet
+    let mensaje = res.message  
+    
+      
+    console.log ("salida de srvFn.ValidarCodigoPass2:" + retorno + "-" + mensaje )
+      
+    if (retorno == 0 )  {
+        try {
+          console.log("applyActionCode") 
+          await applyActionCode(auth, codVerificacion);    
+        } catch (error) {
+          retorno = 999
+          mensaje = error.message    
+        }
+    }
+      
+    return { codRet: retorno , message: mensaje };
+    
+  } catch (error) {
+     return { codRet: 999 , message: error };
+  }
+}
 
 
 
